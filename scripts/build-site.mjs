@@ -24,7 +24,10 @@ const css = (await build({
   minify: true, write: false,
 })).outputFiles[0].text;
 
+const icon = (n) => `data:image/png;base64,${readFileSync(join(root, `site/favicon-${n}.png`)).toString("base64")}`;
 const body = readFileSync(join(root, "site/template.html"), "utf8")
+  .replace("{{FAVICON}}", icon(32))
+  .replace("{{TOUCHICON}}", icon(180))
   .replace("/*{{CSS}}*/", () => css)
   .replace("/*{{JS}}*/", () => js.replace(/<\/script/gi, "<\\/script"))
   .replaceAll("{{RELEASES}}", RELEASES)

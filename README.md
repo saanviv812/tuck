@@ -28,8 +28,8 @@ the right folder, make a new note, think of a title, type, and by then you've
 lost your train of thought *and* the idea.
 
 tuck skips all of that. one shortcut, a little box pops up, you type, you press
-enter, it's gone and you're back to work. you sort things out later. or never.
-that's fine too.
+enter, it's gone and you're back to work. your flow stays unbroken, and you can sort
+things out whenever you like.
 
 ## what it looks like
 

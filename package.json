@@ -9,7 +9,7 @@
     "app:dev": "tauri dev",
     "app:build": "tauri build",
     "test:ui": "node tests/ui-audit.mjs",
-    "icons": "python scripts/make-icon.py && tauri icon scripts/out/icon-1024.png",
+    "icons": "python scripts/make-icon.py && tauri icon scripts/out/icon-1024.png && node -e \"for (const d of ['android','ios']) require('fs').rmSync('src-tauri/icons/'+d,{recursive:true,force:true})\"",
     "tauri": "tauri",
     "site": "node scripts/build-site.mjs",
     "test:unit": "node --test tests/classify.test.mjs",
