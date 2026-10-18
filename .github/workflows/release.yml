@@ -2,8 +2,8 @@
 # update, and drafts a GitHub release with everything attached.
 #
 # One-time setup (repo → Settings → Secrets and variables → Actions):
-#   TAURI_SIGNING_PRIVATE_KEY           contents of ~/.tauri/thoughtcatcher.key (see docs/shipping.md)
-#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  leave empty if you made the key without one
+#   TAURI_SIGNING_PRIVATE_KEY           the updater private key (see docs/releasing.md)
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  its password (github secrets cannot be empty)
 name: release
 
 on:

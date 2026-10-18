@@ -64,7 +64,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE4QkQwRERBOTY2NDQ1Q0EKUldUS1JXU1cyZzI5R0Nzb1k2Q0c1WEtXQlYycVpmVFR4RFFzZHIyNjY4Y3kzbkR1Y1BJb2NBVzgK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZFMzJERTU0NThDNThBMjcKUldRbmlzVllWTjR5YnQ1ZGd2NTBySnJvbDhXM3htMG54REx5U0c3QkR6Wm9FQXhuWlF0TGxDZXEK",
       "endpoints": [
         "https://github.com/saanviv812/tuck/releases/latest/download/latest.json"
       ],
