@@ -1,4 +1,4 @@
-# Quick sanity check on every push: types, frontend build, Rust compiles.
+# Runs on every push and pull request. Nothing ships unless all of this passes.
 name: check
 
 on:
@@ -9,16 +9,47 @@ on:
 jobs:
   check:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
       - uses: swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
+
       - run: npm ci
-      - run: npm run build
-      - run: cargo check --manifest-path src-tauri/Cargo.toml
+
+      - name: types + production build
+        run: npm run build
+
+      - name: website builds
+        run: npm run site
+
+      - name: suggestion rules
+        run: npm run test:unit
+
+      - name: rust formatting
+        run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
+
+      - name: rust lint (no warnings allowed)
+        run: cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
+
+      - name: rust tests (storage, backups, recovery)
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: ui flows (46 checks in headless Edge)
+        run: |
+          npx vite --port 1420 > vite.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:1420/windows/capture/ > /dev/null && break; sleep 1; done
+          npm run test:ui

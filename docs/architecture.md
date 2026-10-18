@@ -135,7 +135,7 @@ What keeps it cheap:
 | decision | why |
 | --- | --- |
 | Tauri, not Electron | ~2 MB vs ~90 MB installer, far less memory, all the desktop features we need |
-| JSON file, not SQLite | readable, easy to back up, plenty fast for tens of thousands of thoughts |
+| JSON file, not SQLite | readable, easy to back up, plenty fast for tens of thousands of thoughts (~0.3 KB each; 10 a day ≈ 1 MB a year). revisit past ~50,000 |
 | no UI framework | tiny windows, instant startup, nothing to keep updating |
 | per-user NSIS installer | no admin prompt; works on locked-down work laptops |
 | MSI dropped | one installer is enough; WiX downloads were flaky in CI |

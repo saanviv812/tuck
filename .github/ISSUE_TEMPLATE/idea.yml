@@ -1,0 +1,15 @@
+name: i have an idea
+description: a feature, a buddy, or something that would make tuck nicer
+labels: [idea]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: what's the idea?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: when would you use it?
+      description: a quick example from your day helps us understand it

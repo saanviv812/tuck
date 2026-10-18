@@ -22,7 +22,7 @@ Links were checked at the time of writing.
 | question | finding | decision |
 | --- | --- | --- |
 | Electron or Tauri? | Tauri apps ship around 3–10 MB vs 80–200 MB and use much less memory, because they use the browser engine already on Windows ([comparison](https://tech-insider.org/tauri-vs-electron-2026/)) | Tauri 2 |
-| how to stop the "Windows protected your PC" warning | needs a code signing certificate; Azure Artifact Signing is the cheapest route ([Tauri docs](https://v2.tauri.app/distribute/sign/windows/), [Xojo](https://blog.xojo.com/?p=16459)) | not in v1, documented in shipping.md |
+| how to stop the "Windows protected your PC" warning | needs a code signing certificate; Azure Artifact Signing is the cheapest route ([Tauri docs](https://v2.tauri.app/distribute/sign/windows/), [Xojo](https://blog.xojo.com/?p=16459)) | not in v1, documented in releasing.md |
 | safe auto-updates | Tauri's updater requires signed update files ([docs](https://v2.tauri.app/es/plugin/updater/)) | signed updates via GitHub releases |
 | WebView2 memory | share one environment, don't disable the GPU ([Microsoft](https://learn.microsoft.com/microsoft-edge/webview2/concepts/performance)) | one environment; library window only exists while open |
 | distribution beyond GitHub | winget installs NSIS installers silently with `/S` | winget listing after v1 |

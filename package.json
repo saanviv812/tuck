@@ -11,7 +11,9 @@
     "test:ui": "node tests/ui-audit.mjs",
     "icons": "python scripts/make-icon.py && tauri icon scripts/out/icon-1024.png",
     "tauri": "tauri",
-    "site": "node scripts/build-site.mjs"
+    "site": "node scripts/build-site.mjs",
+    "test:unit": "node --test tests/classify.test.mjs",
+    "test": "npm run test:unit && cargo test --manifest-path src-tauri/Cargo.toml"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.1.1",

@@ -11,7 +11,7 @@ how we check it, and how it gets to people.
 | [flows.md](flows.md) | every screen, every button, every keyboard shortcut and every state, written down |
 | [architecture.md](architecture.md) | the code: folders, data, how the windows talk to Rust, performance, reliability |
 | [quality.md](quality.md) | how we test it, the numbers we measured, the manual checklist before a release |
-| [shipping.md](shipping.md) | how a version goes from code to people's computers, and the launch plan |
+| [releasing.md](releasing.md) | how a version goes from code to people's computers |
 
 Other files in the repo root:
 

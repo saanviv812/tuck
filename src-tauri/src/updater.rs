@@ -24,17 +24,35 @@ pub fn start(app: AppHandle) {
 }
 
 async fn sleep(secs: u64) {
-    let _ = tauri::async_runtime::spawn_blocking(move || std::thread::sleep(std::time::Duration::from_secs(secs))).await;
+    let _ = tauri::async_runtime::spawn_blocking(move || {
+        std::thread::sleep(std::time::Duration::from_secs(secs))
+    })
+    .await;
 }
 
 async fn check(app: &AppHandle) -> Result<(), String> {
-    if app.state::<Pending>().0.lock().map(|p| p.is_some()).unwrap_or(false) {
+    if app
+        .state::<Pending>()
+        .0
+        .lock()
+        .map(|p| p.is_some())
+        .unwrap_or(false)
+    {
         return Ok(());
     }
-    let Some(update) = app.updater().map_err(|e| e.to_string())?.check().await.map_err(|e| e.to_string())? else {
+    let Some(update) = app
+        .updater()
+        .map_err(|e| e.to_string())?
+        .check()
+        .await
+        .map_err(|e| e.to_string())?
+    else {
         return Ok(());
     };
-    let bytes = update.download(|_, _| {}, || {}).await.map_err(|e| e.to_string())?;
+    let bytes = update
+        .download(|_, _| {}, || {})
+        .await
+        .map_err(|e| e.to_string())?;
     let label = format!("Restart to update to {}", update.version);
     *app.state::<Pending>().0.lock().map_err(|_| "busy")? = Some((update, bytes));
     if let Some(item) = app.try_state::<UpdateItem>() {
@@ -46,7 +64,12 @@ async fn check(app: &AppHandle) -> Result<(), String> {
 }
 
 pub fn install(app: &AppHandle) {
-    let taken = app.state::<Pending>().0.lock().ok().and_then(|mut p| p.take());
+    let taken = app
+        .state::<Pending>()
+        .0
+        .lock()
+        .ok()
+        .and_then(|mut p| p.take());
     if let Some((update, bytes)) = taken {
         // Windows: runs the installer in passive mode, then relaunches the app
         if let Err(e) = update.install(bytes) {

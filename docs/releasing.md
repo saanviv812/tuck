@@ -1,7 +1,6 @@
-# shipping
+# releasing
 
-How a version of tuck goes from code to people's computers, and how we get it
-in front of people.
+Notes for maintainers: how a version of tuck goes from code to people's computers.
 
 ## versions
 
@@ -16,14 +15,14 @@ The number lives in two places and they must match:
 
 ## one-time setup
 
-1. **GitHub repo:** create `tuck` on your personal account and push the code
-2. **the update address** is set in `src-tauri/tauri.conf.json` →
-   `plugins.updater.endpoints` (currently `saanviv812/tuck`). change it if the repo moves
-3. **add the signing key as secrets** (repo → Settings → Secrets and variables → Actions):
-   - `TAURI_SIGNING_PRIVATE_KEY`: the contents of `~/.tauri/thoughtcatcher.key`
-   - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`: leave empty (the key has no password)
-4. **back up the private key** somewhere safe (a password manager). If it's
-   lost, existing users can't receive updates and have to reinstall manually
+1. **update address:** `src-tauri/tauri.conf.json` → `plugins.updater.endpoints`
+   points at this repo's latest release. change it if the repo moves
+2. **signing secrets** (repo → Settings → Secrets and variables → Actions):
+   - `TAURI_SIGNING_PRIVATE_KEY`: the updater's private key
+   - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`: its password (empty if none)
+3. **keep a backup of the private key** outside the repo. if it's lost, existing
+   installs can't verify new updates and people have to reinstall by hand
+4. **website:** repo → Settings → Pages → Source: **GitHub Actions**
 
 The public half of the key is already in `tauri.conf.json`. That's fine to be public.
 
@@ -44,8 +43,8 @@ The public half of the key is already in `tauri.conf.json`. That's fine to be pu
 6. open the draft on GitHub, write human release notes (copy from the changelog), and **publish**
 7. within ~12 hours, everyone on the old version sees "restart to update"
 
-**Rolling back:** publish a new patch version with the fix. Don't delete a
-release that people may have already downloaded.
+**rolling back:** publish a new patch version with the fix. don't delete a
+release that people may already have downloaded.
 
 ## getting rid of the "Windows protected your PC" warning
 
@@ -68,50 +67,15 @@ above have the exact steps.
 | --- | --- | --- |
 | **GitHub Releases** | v0.1 | the source of truth; the updater reads from here |
 | **winget** | after v0.1 is stable | lets people run `winget install tuck`. submit a manifest to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs); NSIS installs silently with `/S`, scope `user` |
-| **the website** | now | `site/`, built with `npm run site` and published to GitHub Pages by [`site.yml`](../.github/workflows/site.yml) on every push. turn it on once: repo → Settings → Pages → Source: **GitHub Actions**. lives at `https://saanviv812.github.io/tuck/` |
+| **the website** | now | `site/`, built with `npm run site` and published to GitHub Pages by [`site.yml`](../.github/workflows/site.yml) on every push |
 | **Microsoft Store** | later | needs code signing and a store listing; widest reach on Windows |
 | **Mac / Linux** | later | the code is cross-platform; needs testing, Apple notarisation, and Linux packages |
 
-## launch plan
+## feedback
 
-**Before:**
-
-- [ ] record a 10-second clip: shortcut → type → Enter → hop → gone
-- [ ] screenshots (already in `docs/images/`)
-- [ ] the website page
-- [ ] test the installer on a friend's computer
-- [ ] write one short honest post: why you made it, what it does, link
-
-**Launch day (pick 2–3, don't spam):**
-
-- Product Hunt (best on a Tuesday–Thursday)
-- Reddit: r/productivity, r/windows, r/pixelart (show the buddies), r/SideProject
-- Twitter/X, LinkedIn, Threads with the clip
-- Hacker News "Show HN" (lead with the tiny size and the local-only data)
-- design communities (Figma community, Dribbble shots of the buddies)
-
-**After:**
-
-- reply to every comment and issue in the first week
-- collect "what would make you use it every day?" answers
-- ship a small fix release within a week, so people see it's alive
-
-## listening to people
-
-There's no tracking in the app, on purpose. Feedback comes from:
-
-- **GitHub Issues**: bugs and ideas (an issue template with "what did you click
-  right before?" and "attach app.log" helps a lot)
-- **GitHub Discussions**: questions, buddy requests
-- **release download counts** on GitHub
-- an optional short survey linked from the README (3 questions: how often do you
-  use it, what's missing, would you recommend it)
-
-## support
-
-- the README's FAQ answers the common questions
-- `app.log` next to the data file has the errors
-- response goal: first reply within 2 days
+tuck has no tracking, on purpose. Feedback comes through
+[GitHub Issues](../../../issues) (bug reports and ideas both have a short form)
+and download counts on the releases page.
 
 ## roadmap (ideas, not promises)
 
@@ -119,8 +83,9 @@ There's no tracking in the app, on purpose. Feedback comes from:
 | --- | --- |
 | code signing | removes the scary warning, the biggest drop-off |
 | winget listing | one-line install for developers |
-| more buddies + seasonal ones | the most-requested type of thing for apps like this |
+| more buddies, including seasonal ones | picking a buddy is half the fun |
 | reminders on a thought | "remember to…" thoughts are common |
 | Mac build | many designers are on Mac |
 | optional sync (bring your own folder, e.g. OneDrive) | keeps it local-first |
 | opt-in AI suggestions | only if people ask, and only with clear consent |
+| switch storage to SQLite, if someone gets past ~50,000 thoughts | today the whole file is rewritten on each save. that's instant for normal use (10 a day is ~1 MB a year), but a database would only write what changed |

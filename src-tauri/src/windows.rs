@@ -9,7 +9,9 @@ pub(crate) const PET_H: f64 = 96.0;
 
 /// Open the popup on the monitor the cursor is on, a little above centre.
 pub fn show_capture(app: &AppHandle) {
-    let Some(w) = app.get_webview_window("capture") else { return };
+    let Some(w) = app.get_webview_window("capture") else {
+        return;
+    };
     if let Ok(c) = w.cursor_position() {
         if let Ok(Some(m)) = app.monitor_from_point(c.x, c.y) {
             let s = m.scale_factor();
@@ -49,14 +51,18 @@ pub fn toggle_capture(app: &AppHandle) {
 pub fn show_library(app: &AppHandle, thought_id: Option<String>) {
     let w = match app.get_webview_window("library") {
         Some(w) => w,
-        None => match WebviewWindowBuilder::new(app, "library", WebviewUrl::App("windows/library/index.html".into()))
-            .title("tuck")
-            .inner_size(1000.0, 680.0)
-            .min_inner_size(760.0, 520.0)
-            .decorations(false)
-            .center()
-            .visible(false)
-            .build()
+        None => match WebviewWindowBuilder::new(
+            app,
+            "library",
+            WebviewUrl::App("windows/library/index.html".into()),
+        )
+        .title("tuck")
+        .inner_size(1000.0, 680.0)
+        .min_inner_size(760.0, 520.0)
+        .decorations(false)
+        .center()
+        .visible(false)
+        .build()
         {
             Ok(w) => w,
             Err(e) => {
@@ -90,21 +96,25 @@ pub fn set_pet(app: &AppHandle, on: bool) {
                 x = (wa.position.x as f64 + wa.size.width as f64) / s - PET_W - 180.0;
                 y = (wa.position.y as f64 + wa.size.height as f64) / s - PET_H;
             }
-            let b = WebviewWindowBuilder::new(app, "pet", WebviewUrl::App("windows/pet/index.html".into()))
-                .position(x, y)
-                .title("buddy")
-                .inner_size(PET_W, PET_H)
-                .decorations(false)
-                .transparent(true)
-                .shadow(false)
-                .always_on_top(true)
-                .skip_taskbar(true)
-                .resizable(false)
-                // created visible but unfocused: Tauri shows it without activating it
-                // and applies the frameless style itself (a raw ShowWindow didn't)
-                .focused(false)
-                .focusable(false) // never the window Windows hands focus to
-                .visible(true);
+            let b = WebviewWindowBuilder::new(
+                app,
+                "pet",
+                WebviewUrl::App("windows/pet/index.html".into()),
+            )
+            .position(x, y)
+            .title("buddy")
+            .inner_size(PET_W, PET_H)
+            .decorations(false)
+            .transparent(true)
+            .shadow(false)
+            .always_on_top(true)
+            .skip_taskbar(true)
+            .resizable(false)
+            // created visible but unfocused: Tauri shows it without activating it
+            // and applies the frameless style itself (a raw ShowWindow didn't)
+            .focused(false)
+            .focusable(false) // never the window Windows hands focus to
+            .visible(true);
             if let Err(e) = b.build() {
                 crate::commands::log_to_file(app, &format!("pet window: {e}"));
             }

@@ -12,7 +12,11 @@ pub(crate) struct PetItem(MenuItem<tauri::Wry>);
 pub(crate) struct UpdateItem(pub(crate) MenuItem<tauri::Wry>);
 
 fn pet_label(on: bool) -> &'static str {
-    if on { "Hide desk buddy" } else { "Show desk buddy" }
+    if on {
+        "Hide desk buddy"
+    } else {
+        "Show desk buddy"
+    }
 }
 
 pub fn set_pet_label(app: &AppHandle, on: bool) {
@@ -33,7 +37,13 @@ fn toggle_pet(app: &AppHandle) {
 }
 
 pub fn build(app: &AppHandle, shortcut: &str, pet_on: bool) -> tauri::Result<()> {
-    let catch = MenuItem::with_id(app, "catch", format!("Tuck a thought\t{shortcut}"), true, None::<&str>)?;
+    let catch = MenuItem::with_id(
+        app,
+        "catch",
+        format!("Tuck a thought\t{shortcut}"),
+        true,
+        None::<&str>,
+    )?;
     let library = MenuItem::with_id(app, "library", "Open my thoughts", true, None::<&str>)?;
     let pet = MenuItem::with_id(app, "pet", pet_label(pet_on), true, None::<&str>)?;
     let version = format!("tuck {}", app.package_info().version);
@@ -59,7 +69,12 @@ pub fn build(app: &AppHandle, shortcut: &str, pet_on: bool) -> tauri::Result<()>
         })
         .on_tray_icon_event(|tray, e| {
             // left click opens the popup; right click shows the menu
-            if let TrayIconEvent::Click { button: MouseButton::Left, button_state: MouseButtonState::Up, .. } = e {
+            if let TrayIconEvent::Click {
+                button: MouseButton::Left,
+                button_state: MouseButtonState::Up,
+                ..
+            } = e
+            {
                 windows::show_capture(tray.app_handle());
             }
         });

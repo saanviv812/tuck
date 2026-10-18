@@ -41,12 +41,23 @@ pub fn track(app: AppHandle) {
             }
             last = (c.x, c.y);
             for label in ["capture", "pet", "library"] {
-                let Some(w) = app.get_webview_window(label) else { continue };
+                let Some(w) = app.get_webview_window(label) else {
+                    continue;
+                };
                 if !w.is_visible().unwrap_or(false) {
                     continue;
                 }
-                let (Ok(p), Ok(s)) = (w.inner_position(), w.scale_factor()) else { continue };
-                let _ = app.emit_to(label, "cursor", Point { x: (c.x - p.x as f64) / s, y: (c.y - p.y as f64) / s });
+                let (Ok(p), Ok(s)) = (w.inner_position(), w.scale_factor()) else {
+                    continue;
+                };
+                let _ = app.emit_to(
+                    label,
+                    "cursor",
+                    Point {
+                        x: (c.x - p.x as f64) / s,
+                        y: (c.y - p.y as f64) / s,
+                    },
+                );
             }
         }
     });

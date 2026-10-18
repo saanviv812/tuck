@@ -101,7 +101,7 @@ optional survey) and from GitHub release download counts.
 | risk | what we do about it |
 | --- | --- |
 | shortcut clashes with another app | rebindable in settings; clear error if taken |
-| SmartScreen warning scares people off | explained in the README; code signing is the fix (see shipping.md) |
+| SmartScreen warning scares people off | explained in the README; code signing is the fix (see releasing.md) |
 | buddy feels distracting | small, calm, can stay put or be hidden |
 | data loss | atomic writes, backup copy, corrupt-file recovery, error log |
 | it grows into a bloated notes app | the "not in v1" list above, and principle 2 |

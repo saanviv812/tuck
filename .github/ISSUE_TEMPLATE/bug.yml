@@ -1,0 +1,36 @@
+name: something's not working
+description: tell us what went wrong so we can fix it
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: what happened?
+      description: what did you click or press right before it went wrong?
+      placeholder: "I pressed Ctrl+Shift+Space, typed a thought, pressed Enter, and…"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: what did you expect instead?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: tuck version
+      description: right-click the tuck icon near your clock; the version is in the menu
+      placeholder: "0.1.0"
+  - type: input
+    id: windows
+    attributes:
+      label: windows version and display scaling
+      description: Settings → System → About, and Settings → System → Display → Scale
+      placeholder: "Windows 11, 125%"
+  - type: textarea
+    id: log
+    attributes:
+      label: app.log (optional, but it helps a lot)
+      description: "paste the last few lines of %APPDATA%\\app.tuck.desktop\\app.log. it never contains your thoughts"
+      render: text

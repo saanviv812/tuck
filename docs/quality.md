@@ -16,14 +16,25 @@ npm run test:ui    # terminal 2 → "46/46 passed"
 
 It never touches your real mouse, keyboard or data.
 
-## type and build checks
+## unit tests
 
 ```bash
-npm run build                                   # TypeScript + production bundle
-cargo check --manifest-path src-tauri/Cargo.toml
+npm test     # 7 suggestion-rule tests + 8 Rust tests
 ```
 
-Both run on every push to `main` ([`.github/workflows/check.yml`](../.github/workflows/check.yml)).
+- [`tests/classify.test.mjs`](../tests/classify.test.mjs): every type rule, links
+  winning over other patterns, hashtags, skipped words, pocket matching, and that
+  the original text is never changed
+- [`src-tauri/src/store.rs`](../src-tauri/src/store.rs) tests: first run, save and
+  reload, the backup copy, recovering from a broken file, moving data from the old
+  app folder without ever overwriting newer data, loading older file versions,
+  unique ids; plus export dates (leap years, year ends)
+
+## on every push
+
+[`check.yml`](../.github/workflows/check.yml) runs all of it on a clean Windows
+machine: type check, production build, website build, unit tests, `cargo fmt
+--check`, `cargo clippy -D warnings` (no warnings allowed) and the 46 UI checks.
 
 ## visual review
 

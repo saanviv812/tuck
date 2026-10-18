@@ -30,7 +30,11 @@ pub(crate) fn changed(app: &AppHandle) {
 
 /// Change the data and save it. If saving fails, memory is rolled back so
 /// what you see always matches what's on disk.
-pub(crate) fn with_store<T>(app: &AppHandle, db: &Db, f: impl FnOnce(&mut Data) -> Result<T, String>) -> Result<T, String> {
+pub(crate) fn with_store<T>(
+    app: &AppHandle,
+    db: &Db,
+    f: impl FnOnce(&mut Data) -> Result<T, String>,
+) -> Result<T, String> {
     let mut s = db.lock().map_err(|_| "store is busy".to_string())?;
     let snapshot = s.state.clone();
     let out = f(&mut s.state)?;
@@ -57,7 +61,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(updater::Pending::default())
-        .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec!["--hidden"])))
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            Some(vec!["--hidden"]),
+        ))
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, _shortcut, event| {
@@ -79,7 +86,10 @@ pub fn run() {
             let handle = app.handle().clone();
             if let Ok(sc) = settings.shortcut.parse::<Shortcut>() {
                 if let Err(e) = handle.global_shortcut().register(sc) {
-                    commands::log_to_file(&handle, &format!("shortcut {} unavailable: {e}", settings.shortcut));
+                    commands::log_to_file(
+                        &handle,
+                        &format!("shortcut {} unavailable: {e}", settings.shortcut),
+                    );
                 }
             }
             tray::build(&handle, &settings.shortcut, settings.desk_pet)?;
@@ -119,7 +129,10 @@ pub fn run() {
 
     app.run(|_app, event| {
         // closing the library never quits; tuck lives in the tray
-        if let RunEvent::ExitRequested { api, code: None, .. } = event {
+        if let RunEvent::ExitRequested {
+            api, code: None, ..
+        } = event
+        {
             api.prevent_exit();
         }
     });

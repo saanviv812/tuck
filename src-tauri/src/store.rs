@@ -120,12 +120,19 @@ impl Store {
             Some(s) => s,
             None if path.exists() => {
                 // keep the unreadable file for recovery, fall back to the backup
-                let _ = fs::rename(&path, path.with_extension(format!("corrupt-{}.json", now_ms())));
+                let _ = fs::rename(
+                    &path,
+                    path.with_extension(format!("corrupt-{}.json", now_ms())),
+                );
                 read(&bak).unwrap_or_default()
             }
             None => read(&bak).unwrap_or_default(),
         };
-        Self { path, state, first_run }
+        Self {
+            path,
+            state,
+            first_run,
+        }
     }
 
     /// write tmp → fsync → keep previous as .bak → atomic rename over the original
@@ -135,7 +142,8 @@ impl Store {
         let tmp = self.path.with_extension("json.tmp");
         {
             let mut f = fs::File::create(&tmp).map_err(|e| format!("couldn't write: {e}"))?;
-            f.write_all(&json).map_err(|e| format!("couldn't write: {e}"))?;
+            f.write_all(&json)
+                .map_err(|e| format!("couldn't write: {e}"))?;
             f.sync_all().map_err(|e| format!("couldn't flush: {e}"))?;
         }
         if self.path.exists() {
@@ -154,7 +162,142 @@ impl Store {
             }
         }
         let _ = fs::remove_file(&tmp);
-        fs::write(&self.path, &json)
-            .map_err(|e| format!("couldn't save ({}; then {e})", last.map(|x| x.to_string()).unwrap_or_default()))
+        fs::write(&self.path, &json).map_err(|e| {
+            format!(
+                "couldn't save ({}; then {e})",
+                last.map(|x| x.to_string()).unwrap_or_default()
+            )
+        })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::PathBuf;
+
+    /// A fresh, empty folder for one test.
+    fn temp_dir(name: &str) -> PathBuf {
+        let d = std::env::temp_dir().join(format!("tuck-test-{name}-{}", new_id()));
+        let _ = fs::remove_dir_all(&d);
+        fs::create_dir_all(&d).unwrap();
+        d
+    }
+
+    fn thought(text: &str) -> Thought {
+        Thought {
+            id: new_id(),
+            text: text.into(),
+            created_at: now_ms(),
+            updated_at: now_ms(),
+            vault_id: None,
+            category: None,
+            tags: vec![],
+            suggestion: None,
+            archived: false,
+        }
+    }
+
+    #[test]
+    fn empty_folder_is_a_first_run() {
+        let d = temp_dir("first");
+        let s = Store::open(&d, None);
+        assert!(s.first_run);
+        assert!(s.state.thoughts.is_empty());
+        assert_eq!(s.state.settings.shortcut, "Ctrl+Shift+Space");
+    }
+
+    #[test]
+    fn saved_thoughts_come_back_and_no_temp_file_is_left() {
+        let d = temp_dir("roundtrip");
+        let mut s = Store::open(&d, None);
+        s.state.thoughts.push(thought("call the dentist"));
+        s.save().unwrap();
+        s.state.thoughts.push(thought("recap module 5"));
+        s.save().unwrap();
+
+        let again = Store::open(&d, None);
+        assert!(!again.first_run);
+        assert_eq!(again.state.thoughts.len(), 2);
+        assert!(!d.join("thoughts.json.tmp").exists());
+        // the previous version is kept as a backup
+        let bak: State =
+            serde_json::from_str(&fs::read_to_string(d.join("thoughts.json.bak")).unwrap())
+                .unwrap();
+        assert_eq!(bak.thoughts.len(), 1);
+    }
+
+    #[test]
+    fn a_broken_file_falls_back_to_the_backup_and_is_kept_aside() {
+        let d = temp_dir("corrupt");
+        let mut s = Store::open(&d, None);
+        s.state.thoughts.push(thought("keep me"));
+        s.save().unwrap();
+        s.save().unwrap(); // now the .bak has "keep me" too
+        fs::write(d.join("thoughts.json"), "{ not json").unwrap();
+
+        let recovered = Store::open(&d, None);
+        assert_eq!(recovered.state.thoughts.len(), 1);
+        assert_eq!(recovered.state.thoughts[0].text, "keep me");
+        let kept = fs::read_dir(&d)
+            .unwrap()
+            .filter_map(|e| e.ok())
+            .any(|e| e.file_name().to_string_lossy().contains("corrupt-"));
+        assert!(kept, "the unreadable file should be kept for recovery");
+    }
+
+    #[test]
+    fn old_data_is_copied_from_the_previous_app_folder() {
+        let old = temp_dir("legacy-old");
+        let mut s = Store::open(&old, None);
+        s.state.thoughts.push(thought("from before the rename"));
+        s.save().unwrap();
+
+        let new = temp_dir("legacy-new");
+        let moved = Store::open(&new, Some(&old));
+        assert_eq!(moved.state.thoughts.len(), 1);
+        assert!(
+            old.join("thoughts.json").exists(),
+            "the old folder is never deleted"
+        );
+    }
+
+    #[test]
+    fn existing_data_is_never_overwritten_by_old_data() {
+        let old = temp_dir("legacy-old2");
+        let mut o = Store::open(&old, None);
+        o.state.thoughts.push(thought("old"));
+        o.save().unwrap();
+
+        let new = temp_dir("legacy-new2");
+        let mut n = Store::open(&new, None);
+        n.state.thoughts.push(thought("new one"));
+        n.state.thoughts.push(thought("new two"));
+        n.save().unwrap();
+
+        let opened = Store::open(&new, Some(&old));
+        assert_eq!(opened.state.thoughts.len(), 2);
+    }
+
+    #[test]
+    fn files_from_older_versions_load_with_defaults() {
+        let d = temp_dir("defaults");
+        // an old file: no version, missing settings fields, thought without tags
+        fs::write(
+            d.join("thoughts.json"),
+            r#"{"thoughts":[{"id":"a","text":"hi","created_at":1,"updated_at":1,"vault_id":null}],"settings":{"buddy":"miso"}}"#,
+        )
+        .unwrap();
+        let s = Store::open(&d, None);
+        assert_eq!(s.state.thoughts[0].tags.len(), 0);
+        assert!(!s.state.thoughts[0].archived);
+        assert_eq!(s.state.settings.buddy, "miso");
+        assert!(s.state.settings.desk_pet);
+    }
+
+    #[test]
+    fn ids_are_unique() {
+        let ids: std::collections::HashSet<String> = (0..5000).map(|_| new_id()).collect();
+        assert_eq!(ids.len(), 5000);
     }
 }

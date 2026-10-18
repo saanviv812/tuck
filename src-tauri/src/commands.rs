@@ -21,7 +21,12 @@ pub fn load_state(db: Db) -> Result<Data, String> {
 }
 
 #[tauri::command]
-pub fn add_thought(app: AppHandle, db: Db, text: String, vault_id: Option<String>) -> Result<Thought, String> {
+pub fn add_thought(
+    app: AppHandle,
+    db: Db,
+    text: String,
+    vault_id: Option<String>,
+) -> Result<Thought, String> {
     let text = text.trim_end().to_string();
     if text.trim().is_empty() {
         return Err("nothing to save".into());
@@ -30,8 +35,15 @@ pub fn add_thought(app: AppHandle, db: Db, text: String, vault_id: Option<String
         let now = now_ms();
         let vault_id = vault_id.filter(|v| s.vaults.iter().any(|x| &x.id == v));
         let t = Thought {
-            id: new_id(), text, created_at: now, updated_at: now, vault_id,
-            category: None, tags: vec![], suggestion: None, archived: false,
+            id: new_id(),
+            text,
+            created_at: now,
+            updated_at: now,
+            vault_id,
+            category: None,
+            tags: vec![],
+            suggestion: None,
+            archived: false,
         };
         s.thoughts.insert(0, t.clone());
         Ok(t)
@@ -39,12 +51,23 @@ pub fn add_thought(app: AppHandle, db: Db, text: String, vault_id: Option<String
 }
 
 /// Only these fields can be changed from the UI.
-const EDITABLE: [&str; 6] = ["text", "vault_id", "category", "tags", "suggestion", "archived"];
+const EDITABLE: [&str; 6] = [
+    "text",
+    "vault_id",
+    "category",
+    "tags",
+    "suggestion",
+    "archived",
+];
 
 #[tauri::command]
 pub fn update_thought(app: AppHandle, db: Db, id: String, patch: Value) -> Result<Thought, String> {
     with_store(&app, &db, |s| {
-        let t = s.thoughts.iter_mut().find(|t| t.id == id).ok_or("thought not found")?;
+        let t = s
+            .thoughts
+            .iter_mut()
+            .find(|t| t.id == id)
+            .ok_or("thought not found")?;
         let mut v = serde_json::to_value(&*t).map_err(|e| e.to_string())?;
         if let (Some(obj), Some(p)) = (v.as_object_mut(), patch.as_object()) {
             for key in EDITABLE {
@@ -77,16 +100,31 @@ pub fn add_vault(app: AppHandle, db: Db, name: String, color: String) -> Result<
         return Err("a pocket needs a name".into());
     }
     with_store(&app, &db, |s| {
-        let v = Vault { id: new_id(), name, color, created_at: now_ms() };
+        let v = Vault {
+            id: new_id(),
+            name,
+            color,
+            created_at: now_ms(),
+        };
         s.vaults.push(v.clone());
         Ok(v)
     })
 }
 
 #[tauri::command]
-pub fn update_vault(app: AppHandle, db: Db, id: String, name: String, color: String) -> Result<(), String> {
+pub fn update_vault(
+    app: AppHandle,
+    db: Db,
+    id: String,
+    name: String,
+    color: String,
+) -> Result<(), String> {
     with_store(&app, &db, |s| {
-        let v = s.vaults.iter_mut().find(|v| v.id == id).ok_or("vault not found")?;
+        let v = s
+            .vaults
+            .iter_mut()
+            .find(|v| v.id == id)
+            .ok_or("vault not found")?;
         if !name.trim().is_empty() {
             v.name = name.trim().into();
         }
@@ -111,11 +149,24 @@ pub fn delete_vault(app: AppHandle, db: Db, id: String) -> Result<(), String> {
 // ---- settings --------------------------------------------------------------
 
 #[tauri::command]
-pub async fn save_settings(app: AppHandle, db: Db<'_>, settings: Settings) -> Result<Settings, String> {
-    let prev = db.lock().map_err(|_| "store is busy")?.state.settings.clone();
+pub async fn save_settings(
+    app: AppHandle,
+    db: Db<'_>,
+    settings: Settings,
+) -> Result<Settings, String> {
+    let prev = db
+        .lock()
+        .map_err(|_| "store is busy")?
+        .state
+        .settings
+        .clone();
     if prev.launch_at_login != settings.launch_at_login {
         let al = app.autolaunch();
-        let r = if settings.launch_at_login { al.enable() } else { al.disable() };
+        let r = if settings.launch_at_login {
+            al.enable()
+        } else {
+            al.disable()
+        };
         r.map_err(|e| format!("couldn't change start-up setting: {e}"))?;
     }
     let out = with_store(&app, &db, |s| {
@@ -130,9 +181,17 @@ pub async fn save_settings(app: AppHandle, db: Db<'_>, settings: Settings) -> Re
 
 #[tauri::command]
 pub fn set_shortcut(app: AppHandle, db: Db, accel: String) -> Result<(), String> {
-    let next: Shortcut = accel.parse().map_err(|_| format!("\"{accel}\" isn't a shortcut I can use"))?;
+    let next: Shortcut = accel
+        .parse()
+        .map_err(|_| format!("\"{accel}\" isn't a shortcut I can use"))?;
     let gs = app.global_shortcut();
-    let prev = db.lock().map_err(|_| "store is busy")?.state.settings.shortcut.clone();
+    let prev = db
+        .lock()
+        .map_err(|_| "store is busy")?
+        .state
+        .settings
+        .shortcut
+        .clone();
     let _ = gs.unregister_all();
     if let Err(e) = gs.register(next) {
         if let Ok(p) = prev.parse::<Shortcut>() {
@@ -175,9 +234,19 @@ pub struct Area {
 /// Work area (desktop minus taskbar) of the monitor the window is on.
 #[tauri::command]
 pub fn work_area(window: WebviewWindow) -> Option<Area> {
-    let m = window.current_monitor().ok().flatten().or_else(|| window.primary_monitor().ok().flatten())?;
+    let m = window
+        .current_monitor()
+        .ok()
+        .flatten()
+        .or_else(|| window.primary_monitor().ok().flatten())?;
     let wa = m.work_area();
-    Some(Area { x: wa.position.x, y: wa.position.y, w: wa.size.width, h: wa.size.height, scale: m.scale_factor() })
+    Some(Area {
+        x: wa.position.x,
+        y: wa.position.y,
+        w: wa.size.width,
+        h: wa.size.height,
+        scale: m.scale_factor(),
+    })
 }
 
 #[tauri::command]
@@ -189,13 +258,17 @@ pub fn restart_to_update(app: AppHandle) {
 
 #[tauri::command]
 pub fn data_dir(db: Db) -> String {
-    db.lock().map(|s| s.path.display().to_string()).unwrap_or_default()
+    db.lock()
+        .map(|s| s.path.display().to_string())
+        .unwrap_or_default()
 }
 
 #[tauri::command]
 pub fn open_data_dir(app: AppHandle, db: Db) -> Result<(), String> {
     let path = db.lock().map_err(|_| "store is busy")?.path.clone();
-    app.opener().reveal_item_in_dir(path).map_err(|e| e.to_string())
+    app.opener()
+        .reveal_item_in_dir(path)
+        .map_err(|e| e.to_string())
 }
 
 /// Write everything (minus archived) to a readable markdown file in Documents.
@@ -204,9 +277,17 @@ pub fn export_markdown(app: AppHandle, db: Db) -> Result<String, String> {
     let s = db.lock().map_err(|_| "store is busy")?.state.clone();
     let mut out = String::from("# my thoughts\n\n");
     let mut groups: Vec<(String, Option<String>)> = vec![("Main pocket".into(), None)];
-    groups.extend(s.vaults.iter().map(|v| (v.name.clone(), Some(v.id.clone()))));
+    groups.extend(
+        s.vaults
+            .iter()
+            .map(|v| (v.name.clone(), Some(v.id.clone()))),
+    );
     for (name, id) in groups {
-        let items: Vec<&Thought> = s.thoughts.iter().filter(|t| t.vault_id == id && !t.archived).collect();
+        let items: Vec<&Thought> = s
+            .thoughts
+            .iter()
+            .filter(|t| t.vault_id == id && !t.archived)
+            .collect();
         if items.is_empty() {
             continue;
         }
@@ -215,9 +296,21 @@ pub fn export_markdown(app: AppHandle, db: Db) -> Result<String, String> {
             let tags = if t.tags.is_empty() {
                 String::new()
             } else {
-                format!("  \n  _{}_", t.tags.iter().map(|x| format!("#{x}")).collect::<Vec<_>>().join(" "))
+                format!(
+                    "  \n  _{}_",
+                    t.tags
+                        .iter()
+                        .map(|x| format!("#{x}"))
+                        .collect::<Vec<_>>()
+                        .join(" ")
+                )
             };
-            out.push_str(&format!("- **{}** — {}{}\n", ymd(t.created_at), t.text.replace('\n', "  \n  "), tags));
+            out.push_str(&format!(
+                "- **{}** — {}{}\n",
+                ymd(t.created_at),
+                t.text.replace('\n', "  \n  "),
+                tags
+            ));
         }
         out.push('\n');
     }
@@ -250,10 +343,17 @@ pub fn log_line(db: Db, level: String, msg: String) {
     let Ok(s) = db.lock() else { return };
     let path = s.path.with_file_name("app.log");
     drop(s);
-    if std::fs::metadata(&path).map(|m| m.len() > 256 * 1024).unwrap_or(false) {
+    if std::fs::metadata(&path)
+        .map(|m| m.len() > 256 * 1024)
+        .unwrap_or(false)
+    {
         let _ = std::fs::rename(&path, path.with_extension("old.log"));
     }
-    if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(&path) {
+    if let Ok(mut f) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&path)
+    {
         use std::io::Write;
         let _ = writeln!(f, "{} [{}] {}", now_ms(), level, msg.replace('\n', " "));
     }
@@ -263,5 +363,18 @@ pub fn log_line(db: Db, level: String, msg: String) {
 pub(crate) fn log_to_file(app: &AppHandle, msg: &str) {
     if let Some(db) = app.try_state::<Mutex<Store>>() {
         log_line(db, "warn".into(), msg.into());
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::ymd;
+
+    #[test]
+    fn dates_for_the_markdown_export() {
+        assert_eq!(ymd(0), "1970-01-01");
+        assert_eq!(ymd(951_782_400_000), "2000-02-29"); // leap day
+        assert_eq!(ymd(1_704_067_199_000), "2023-12-31");
+        assert_eq!(ymd(1_704_067_200_000), "2024-01-01");
     }
 }

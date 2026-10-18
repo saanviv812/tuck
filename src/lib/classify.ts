@@ -9,7 +9,7 @@ const RULES: [string, RegExp][] = [
   ["Link", /https?:\/\/\S+/i],
   ["To-do", /^(todo|to do|remember to|don't forget|need to|must|buy|call|email|book|pay|fix|send|finish)\b|\b(by (mon|tue|wed|thu|fri|sat|sun|tomorrow|tonight))\b/i],
   ["Idea", /\b(what if|idea:|how might we|could we|imagine|wouldn't it be|app that|product that|feature)\b/i],
-  ["Quote", /^["“].+["”](\s*[-—–]\s*\S+)?$/],
+  ["Quote", /^["“].+["”](\s*[-—–~]\s*.{1,60})?$/], // "…", optionally followed by — who said it
   ["Question", /\?\s*$|^(why|how|when|where|who|which|is|are|does|do|can|should)\b/i],
 ];
 

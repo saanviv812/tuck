@@ -272,7 +272,12 @@ designed, how it's tested and how releases get made.
 npm install
 npm run app:dev     # run it with live reload
 npm run app:build   # make the installer
+npm test            # suggestion rules + storage tests
 ```
+
+[![check](../../actions/workflows/check.yml/badge.svg)](../../actions/workflows/check.yml)
+every push runs the type check, the build, rust formatting and lint, 15 unit
+tests and 46 ui checks.
 
 ## thanks
 
