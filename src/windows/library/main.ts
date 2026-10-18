@@ -542,21 +542,21 @@ async function seedDemo() {
   const want = new URLSearchParams(location.search).get("buddy");
   if (!isTauri && want) { const st = await store.load(); await store.saveSettings({ ...st.settings, buddy: want }); }
   if (isTauri || !location.search.includes("demo") || (await store.load()).thoughts.length) return;
-  const pt = await store.addVault("design ideas", "sage");
+  const pt = await store.addVault("study", "sage");
   const rd = await store.addVault("reading list", "sky");
   const samples: [string, string | null, string | null, string[]][] = [
-    ["onboarding idea: show one feature at a time instead of a full tour", pt.id, "Idea", ["onboarding"]],
-    ["finish the user interview notes before thursday's studio", null, "To-do", ["uni"]],
-    ["https://lawsofux.com — read before the hci assignment", rd.id, "Link", ["reference"]],
-    ["why do most settings pages hide the useful options?", pt.id, "Question", ["settings"]],
-    ["email the professor about a portfolio review slot", null, "To-do", ["uni"]],
+    ["have to recap module 5 part 2", pt.id, "To-do", ["study"]],
+    ["remember to email priya about the research notes", null, "To-do", ["work"]],
+    ["https://www.are.na — save for later", rd.id, "Link", ["reference"]],
+    ["chk the new case study in bookmarks", pt.id, "To-do", ["study"]],
+    ["call the dentist to book a check-up", null, "To-do", ["errands"]],
   ];
   for (const [text, v, category, tags] of samples.reverse()) {
     const t = await store.addThought(text, v);
     await store.updateThought(t.id, { category, tags });
   }
-  const t = await store.addThought("empty states could suggest a first step instead of just saying 'nothing here'", null);
-  await store.updateThought(t.id, { suggestion: { category: "Idea", tags: ["empty-states"], vault_id: pt.id } });
+  const t = await store.addThought("a notes app where the mascot reacts to what you write", null);
+  await store.updateThought(t.id, { suggestion: { category: "Idea", tags: ["notes"], vault_id: null } });
 }
 
 store.onChange(reload);

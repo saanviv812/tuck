@@ -122,8 +122,8 @@ just move to your main pocket.
 
 ### little suggestions
 
-after you save, tuck sometimes guesses things like *"this looks like an idea.
-tags: #onboarding. pocket: design ideas"*. you'll see a small **✦ suggestion**
+after you save, tuck sometimes guesses things like *"this looks like a to-do.
+tags: #study. pocket: study"*. you'll see a small **✦ suggestion**
 on the thought. open it and pick **use this** or **no thanks**.
 
 it never changes what you actually wrote. and it all happens on your computer.

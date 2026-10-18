@@ -32,16 +32,16 @@ One file: `%APPDATA%\app.tuck.desktop\thoughts.json`
   "version": 1,
   "thoughts": [{
     "id": "1a14d5a8c16000394dc",       // time-sortable
-    "text": "onboarding idea: show one feature at a time",
+    "text": "have to recap module 5 part 2",
     "created_at": 1792299142166,       // ms since 1970
     "updated_at": 1792299142166,
     "vault_id": null,                  // null = main pocket (the data still says "vault")
-    "category": "Idea",                // or null
-    "tags": ["onboarding"],
-    "suggestion": { "category": "Idea", "tags": ["onboarding"], "vault_id": null },
+    "category": "To-do",               // or null
+    "tags": ["study"],
+    "suggestion": { "category": "To-do", "tags": ["study"], "vault_id": null },
     "archived": false
   }],
-  "vaults": [{ "id": "…", "name": "design ideas", "color": "sage", "created_at": 0 }],   // pockets, in the UI
+  "vaults": [{ "id": "…", "name": "study", "color": "sage", "created_at": 0 }],   // pockets, in the UI
   "settings": {
     "shortcut": "Ctrl+Shift+Space", "buddy": "pip",   // "pip" = nibbles (kept for old files)
     "launch_at_login": false, "desk_pet": true, "auto_suggest": true
