@@ -7,7 +7,7 @@ Links were checked at the time of writing.
 
 | reference | what we took | what we didn't |
 | --- | --- | --- |
-| indie desk-pet apps | the low-res "loaf" buddy style, a soft brown outline instead of black, flat pastel fills, white eyes with a moving pupil, a pet that sits on window edges and the taskbar | their characters and names. our cast is drawn from scratch |
+| indie desk-pet apps | the low-res "loaf" buddy style, a soft brown outline instead of black, flat pastel fills, white eyes with a moving pupil, a pet that sits on window edges and the taskbar | their characters and names |
 | [Shimeji](https://sourceforge.net/projects/shimeji-desktop/) desk pets | the behaviour vocabulary: walk, sit, sleep, drag, fall and land | climbing and multiplying. too distracting for a work tool |
 | [98.css](https://thenextweb.com/news/windows-98-css-library-html) / Windows 9x dialogs | hard 2px bevels (light top-left, dark bottom-right), square title bars, chunky buttons that look pressed when clicked | grey everything and blue gradients. we use warm pastels and no gradients |
 | [Poolsuite](https://www.pcworld.com/article/3213692/pump-up-the-summer-jams-with-the-perfect-poolside-radio-station.html) | proof that a retro OS look can feel warm and modern, not ironic | its loudness. tuck stays quiet |

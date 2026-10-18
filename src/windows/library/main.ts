@@ -542,21 +542,21 @@ async function seedDemo() {
   const want = new URLSearchParams(location.search).get("buddy");
   if (!isTauri && want) { const st = await store.load(); await store.saveSettings({ ...st.settings, buddy: want }); }
   if (isTauri || !location.search.includes("demo") || (await store.load()).thoughts.length) return;
-  const pt = await store.addVault("ideas", "sage");
+  const pt = await store.addVault("design ideas", "sage");
   const rd = await store.addVault("reading list", "sky");
   const samples: [string, string | null, string | null, string[]][] = [
-    ["what if the app remembered where I left off?", pt.id, "Idea", ["apps"]],
-    ["remember to email priya about the research notes", null, "To-do", ["work"]],
-    ["https://www.are.na — save for later", rd.id, "Link", ["reference"]],
-    ["dark mode should remember my last choice", pt.id, "Idea", ["settings"]],
-    ["buy oat milk, batteries and a birthday card", null, "To-do", ["shopping"]],
+    ["onboarding idea: show one feature at a time instead of a full tour", pt.id, "Idea", ["onboarding"]],
+    ["finish the user interview notes before thursday's studio", null, "To-do", ["uni"]],
+    ["https://lawsofux.com — read before the hci assignment", rd.id, "Link", ["reference"]],
+    ["why do most settings pages hide the useful options?", pt.id, "Question", ["settings"]],
+    ["email the professor about a portfolio review slot", null, "To-do", ["uni"]],
   ];
   for (const [text, v, category, tags] of samples.reverse()) {
     const t = await store.addThought(text, v);
     await store.updateThought(t.id, { category, tags });
   }
-  const t = await store.addThought("a notes app where the mascot reacts to what you write", null);
-  await store.updateThought(t.id, { suggestion: { category: "Idea", tags: ["apps"], vault_id: pt.id } });
+  const t = await store.addThought("empty states could suggest a first step instead of just saying 'nothing here'", null);
+  await store.updateThought(t.id, { suggestion: { category: "Idea", tags: ["empty-states"], vault_id: pt.id } });
 }
 
 store.onChange(reload);

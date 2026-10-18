@@ -123,7 +123,7 @@ just move to your main pocket.
 ### little suggestions
 
 after you save, tuck sometimes guesses things like *"this looks like an idea.
-tags: #apps. pocket: ideas"*. you'll see a small **✦ suggestion**
+tags: #onboarding. pocket: design ideas"*. you'll see a small **✦ suggestion**
 on the thought. open it and pick **use this** or **no thanks**.
 
 it never changes what you actually wrote. and it all happens on your computer.
@@ -277,8 +277,7 @@ npm run app:build   # make the installer
 ## thanks
 
 the font is [Departure Mono](https://departuremono.com) by Helena Zhang. the
-buddies were drawn from scratch, pixel by pixel. the look owes a lot to old
-Windows pop-ups and little desk pets.
+look owes a lot to old Windows pop-ups and little desk pets.
 
 tuck is free and open source under the [MIT licence](LICENSE).
 
