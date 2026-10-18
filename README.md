@@ -134,7 +134,7 @@ no AI service, nothing sent anywhere. you can turn it off in settings.
 <p align="center"><img src="docs/images/buddies.png" alt="the nine buddies" width="640"></p>
 
 there are nine to pick from: **nibbles** the mouse, **scoopie** the ice cream,
-**brewbie** the coffee, **shortie** the strawberry shortcake, **miso** the cat,
+**brewbie** the coffee, **biscuit** the puppy, **miso** the cat,
 **matcha** the cupcake, **boba** the milk tea, **tango** the orange and
 **wobbles** the pudding.
 

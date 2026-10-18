@@ -19,7 +19,10 @@ const CAST = cast as unknown as { outline: string; buddies: BuddyDef[] };
 const EYE_WHITE = "#FFFDF6";
 export const BUDDIES: BuddyDef[] = CAST.buddies;
 export const OUTLINE = CAST.outline;
-export const byId = (id: string): BuddyDef => BUDDIES.find((b) => b.id === id) ?? BUDDIES[0];
+// buddies that were retired keep working for people who picked them
+const RENAMED: Record<string, string> = { cake: "pup" };
+export const byId = (id: string): BuddyDef =>
+  BUDDIES.find((b) => b.id === (RENAMED[id] ?? id)) ?? BUDDIES[0];
 
 const BODY = 16; // body width
 const ROWS = 16; // body rows (bottom-aligned)

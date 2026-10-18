@@ -29,8 +29,8 @@ Five of them change with your buddy (set in [`src/lib/theme.ts`](../src/lib/them
 | `--ink-3` | `#A8968A` | placeholders only | no |
 | `--v-*` | 7 pastels | pocket colour dots | no |
 
-Buddy colours: nibbles `#F7B57E`, scoopie `#A9DCC6`, brewbie `#A9CCE8`, shortie
-`#FCE6A8`, miso `#CDBFE6`, matcha `#BFDDB2`, boba `#ECCDA8`, tango `#FBB86C`,
+Buddy colours: nibbles `#F7B57E`, scoopie `#A9DCC6`, brewbie `#A9CCE8`, biscuit
+`#F6C3CE`, miso `#CDBFE6`, matcha `#BFDDB2`, boba `#ECCDA8`, tango `#FBB86C`,
 wobbles `#FCE3A0`. All are light enough that `--ink` text on them stays readable.
 
 ## type
@@ -101,15 +101,15 @@ Drawn as data in [`src/buddies/cast.json`](../src/buddies/cast.json).
 | nibbles (`pip`) | mouse (default) | the original idea; round ears, curly tail |
 | scoopie (`scoop`) | mint ice cream | pointed cone, cute and instantly readable |
 | brewbie (`latte`) | coffee cup | handle + steam; everyone's work buddy |
-| shortie (`cake`) | strawberry shortcake | cream top, jam layer, strawberry |
+| biscuit (`pup`) | puppy | floppy ears, cream snout, wagging tail. the only pink buddy |
 | miso (`miso`) | cat | pointed ears, tail |
 | matcha (`cupcake`) | matcha cupcake | green liner, frosting, sprinkles, cherry |
 | boba (`boba`) | milk tea | tall cup, straw, pearls |
 | tango (`clem`) | orange | round, with a leaf |
 | wobbles (`purin`) | caramel pudding | on a little plate |
 
-We cut the frog, chick, penguin, bunny, bear, doughnut, toast, onigiri, macaron
-and strawberry during review. They either didn't read clearly at 16 px, looked
+We cut the frog, chick, penguin, bunny, bear, doughnut, toast, onigiri, macaron,
+strawberry and shortcake during review. They either didn't read clearly at 16 px, looked
 scary with the eye style, or clashed with the palette.
 
 ## motion

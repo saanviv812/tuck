@@ -134,50 +134,47 @@
       ]
     },
     {
-      "id": "cake",
-      "name": "Shortie",
-      "kind": "shortcake",
+      "id": "pup",
+      "name": "Biscuit",
+      "kind": "puppy",
       "palette": {
-        "o": "#FCE6A8",
-        "c": "#FFF8F0",
-        "p": "#F6A8A0",
-        "w": "#CFE3F2",
-        "x": "#F4A3B4",
-        "k": "#F07F8E",
-        "g": "#9DCB8B"
+        "o": "#F6C3CE",
+        "c": "#FFF3F3",
+        "p": "#E98A9E",
+        "w": "#FFFFFF",
+        "x": "#C98497"
       },
       "eye": {
-        "x": 4,
-        "y": 7
+        "x": 5,
+        "y": 4
       },
       "half": [
-        "........",
-        "........",
-        "........",
-        "..######",
-        ".#cccccc",
-        "#ccccccc",
-        "#coccocc",
-        "#ooooooo",
-        "#ooooooo",
-        "#oppooo#",
-        "#xxxxxxx",
-        "#ooooooo",
-        "########",
-        "#wwwwwww",
-        ".#######"
+        "...#####",
+        ".###oooo",
+        "#xx#oooo",
+        "#xx#oooo",
+        "#xx#oooo",
+        "#xx#oooo",
+        "#xx#opc#",
+        ".#x#occc",
+        "..##oooo",
+        "..#ooooo",
+        "..#ooooo",
+        "...#oooo",
+        "...###.."
       ],
-      "extras": [
-        [
-          6,
-          0,
-          [
-            ".gg.",
-            "#kk#",
-            "#kk#"
-          ]
+      "tail": {
+        "x": 14,
+        "y": 8,
+        "still": [
+          "#.",
+          ".#"
+        ],
+        "wag": [
+          ".#",
+          "#."
         ]
-      ]
+      }
     },
     {
       "id": "miso",
