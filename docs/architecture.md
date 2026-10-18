@@ -32,16 +32,16 @@ One file: `%APPDATA%\app.tuck.desktop\thoughts.json`
   "version": 1,
   "thoughts": [{
     "id": "1a14d5a8c16000394dc",       // time-sortable
-    "text": "what if onboarding adapted…",
+    "text": "what if the app remembered where I left off?",
     "created_at": 1792299142166,       // ms since 1970
     "updated_at": 1792299142166,
-    "vault_id": null,                  // null = unsorted
+    "vault_id": null,                  // null = main pocket (the data still says "vault")
     "category": "Idea",                // or null
-    "tags": ["onboarding"],
-    "suggestion": { "category": "Idea", "tags": ["onboarding"], "vault_id": null },
+    "tags": ["apps"],
+    "suggestion": { "category": "Idea", "tags": ["apps"], "vault_id": null },
     "archived": false
   }],
-  "vaults": [{ "id": "…", "name": "product thinking", "color": "sage", "created_at": 0 }],
+  "vaults": [{ "id": "…", "name": "ideas", "color": "sage", "created_at": 0 }],   // pockets, in the UI
   "settings": {
     "shortcut": "Ctrl+Shift+Space", "buddy": "pip",   // "pip" = nibbles (kept for old files)
     "launch_at_login": false, "desk_pet": true, "auto_suggest": true
@@ -72,7 +72,7 @@ All in [`src-tauri/src/commands.rs`](../src-tauri/src/commands.rs).
 | --- | --- |
 | `load_state` | returns everything |
 | `add_thought` · `update_thought` · `delete_thought` | thoughts (only safe fields can be updated) |
-| `add_vault` · `update_vault` · `delete_vault` | vaults (deleting moves thoughts to unsorted) |
+| `add_vault` · `update_vault` · `delete_vault` | pockets (deleting moves thoughts to main pocket) |
 | `save_settings` · `set_shortcut` | settings; the shortcut is checked with Windows first |
 | `open_capture` · `hide_capture` · `open_library` | windows |
 | `work_area` | screen size minus the taskbar (for the pet) |
@@ -96,7 +96,7 @@ on the main thread, and creating a WebView2 window there deadlocks on Windows.
 - [`buddies/buddy.ts`](../src/buddies/buddy.ts): behaviour. Timers decide
   blinks, breaths, walks, moods; easing moves the eyes.
 - [`lib/classify.ts`](../src/lib/classify.ts): suggestions. Plain rules
-  (phrasing → kind, distinctive words → tags, word overlap → vault). It's the
+  (phrasing → type, distinctive words → tags, word overlap → pocket). It's the
   one place to swap in an opt-in AI model later.
 - [`lib/theme.ts`](../src/lib/theme.ts): derives the app colours from the buddy.
 
@@ -141,4 +141,4 @@ What keeps it cheap:
 | MSI dropped | one installer is enough; WiX downloads were flaky in CI |
 | pupils drawn separately at device resolution | smooth gaze in any direction without breaking the pixel look |
 | settings are staged | people asked for an explicit "save changes" step |
-| "unsorted" instead of "inbox" | "inbox" confused people about what was in it |
+| "main pocket" instead of "inbox" | "inbox" confused people about what was in it |

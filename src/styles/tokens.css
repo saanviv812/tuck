@@ -11,7 +11,7 @@
 :root {
   /* surfaces */
   --desk: #F6EFE2;        /* library backdrop */
-  --face: #FFFDF6;        /* window face (Mochi-warm paper) */
+  --face: #FFFDF6;        /* window face (warm paper) */
   --field: #FFFFFF;       /* text fields */
   --select: #FBE6A6;      /* selection fill (butter) */
   --edge: #5B4A41;        /* the one outline colour, shared with the sprites */

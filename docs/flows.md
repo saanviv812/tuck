@@ -30,7 +30,7 @@ library · `tuck.exe --capture`
 | control | action |
 | --- | --- |
 | text box | multiline; `Shift+Enter` = new line |
-| **unsorted ▾** | opens the vault picker (optional) |
+| **main pocket ▾** | opens the pocket picker (optional) |
 | esc hint | reminder that `Esc` closes |
 | **save ↵** | same as `Enter` |
 | **☰** (title bar) | opens the library (`Ctrl+L`) |
@@ -38,12 +38,12 @@ library · `tuck.exe --capture`
 | title bar (empty part) | drag to move the popup |
 | buddy | click = heart; drag = pick it up; double-click = open library |
 
-### vault picker
+### pocket picker
 
 - opens with a click, `↓`/`↑` on the button, or `Tab` then `Enter`
 - `↑` `↓` move, `Enter` picks, `Esc` closes
-- **+ new vault** asks for a name, creates it and picks it
-- shortcut: `Ctrl+1`…`9` picks a vault, `Ctrl+0` = unsorted
+- **+ new pocket** asks for a name, creates it and picks it
+- shortcut: `Ctrl+1`…`9` picks a pocket, `Ctrl+0` = main pocket
 
 ### popup states
 
@@ -64,30 +64,30 @@ library · `tuck.exe --capture`
 | item | shows |
 | --- | --- |
 | **all thoughts** (default) | everything not archived |
-| **unsorted** | not in any vault |
-| **vaults** | one list per vault; "+ new vault" adds one |
+| **main pocket** | not in any pocket |
+| **pockets** | one list per pocket; "+ new pocket" adds one |
 | **archived** | archived thoughts only |
-| **kinds** | appears once tuck has guessed kinds; click to filter, click again to clear |
+| **types** | appears once tuck has guessed types; click to filter, click again to clear |
 | **tags** | top 24 tags; click to filter |
 
-Drag a thought onto a vault (or **unsorted**) to move it.
+Drag a thought onto a pocket (or **main pocket**) to move it.
 
 ### middle: the list
 
 - newest first, grouped by day ("today", "yesterday", "mon 14 oct")
-- each row: text preview (2 lines), vault dot, time, vault name (in all/archived), kind, up to 3 tags, "✦ suggestion" if there's one
-- **search** (`/` or `Ctrl+F`): matches words, `#tags` and kinds; matches are highlighted; `Esc` clears; `↓` or `Enter` jumps into the list
-- when a vault is open: **rename** (inline, `Enter` saves, `Esc` cancels), **colour** (cycles), **delete** (click twice; thoughts move to unsorted)
+- each row: text preview (2 lines), pocket dot, time, pocket name (in all/archived), type, up to 3 tags, "✦ suggestion" if there's one
+- **search** (`/` or `Ctrl+F`): matches words, `#tags` and types; matches are highlighted; `Esc` clears; `↓` or `Enter` jumps into the list
+- when a pocket is open: **rename** (inline, `Enter` saves, `Esc` cancels), **colour** (cycles), **delete** (click twice; thoughts move to main pocket)
 
 ### right: the thought
 
 | control | action |
 | --- | --- |
 | text | edit in place; saves 0.45 s after you stop typing, and on leaving the box |
-| suggestion card | "use this" applies kind + tags + vault; "no thanks" hides it |
-| caught | when it was saved (and edited) |
-| vault | move it |
-| kind | idea, question, to-do, link, quote, note, feeling, or none |
+| suggestion card | "use this" applies type + tags + pocket; "no thanks" hides it |
+| tucked | when it was saved (and edited) |
+| pocket | move it |
+| type | idea, to-do, question, link, quote, note, or no type |
 | tags | comma separated; `#` optional; saved on change |
 | **archive** / **restore** | put aside / bring back |
 | **delete** | click twice within 3 s |
@@ -107,8 +107,8 @@ Drag a thought onto a vault (or **unsorted**) to move it.
 | where | message |
 | --- | --- |
 | no thoughts at all | "no thoughts yet" + the shortcut |
-| unsorted empty | "all sorted!" |
-| vault empty | "this vault is empty" |
+| main pocket empty | "your main pocket is empty" |
+| pocket empty | "this pocket is empty" |
 | archive empty | "nothing archived" |
 | search, no match | 'nothing matches "…"' + "try fewer words, or a #tag" |
 | nothing selected | "pick a thought" |

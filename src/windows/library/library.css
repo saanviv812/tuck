@@ -115,7 +115,8 @@ html, body { height: 100%; background: var(--desk); overflow: hidden; }
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   overflow: hidden; white-space: pre-wrap; word-break: break-word;
 }
-.item .meta { display: flex; align-items: center; gap: var(--s2); color: var(--ink-2); margin-top: 3px; white-space: nowrap; overflow: hidden; }
+.item .meta { display: flex; align-items: center; gap: var(--s2); color: var(--ink-2); margin-top: 3px; white-space: nowrap; overflow: hidden; min-width: 0; }
+.item .meta > span:last-child { overflow: hidden; text-overflow: ellipsis; }
 .item .sugg { color: var(--ink); background: var(--face); border: 1px solid var(--lo-2); padding: 0 4px; }
 .item.archived .text { color: var(--ink-2); }
 mark { background: var(--select); color: inherit; outline: 1px solid var(--edge); }

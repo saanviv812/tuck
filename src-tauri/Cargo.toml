@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "tuck: a tiny desktop app for catching thoughts"
 authors = ["Saanvi Varma"]
 edition = "2021"
+license = "MIT"
+repository = "https://github.com/saanviv812/tuck"
 
 [lib]
 name = "tuck_lib"

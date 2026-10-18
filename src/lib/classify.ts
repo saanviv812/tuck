@@ -3,7 +3,7 @@
 // implementation (e.g. an opt-in model) without touching callers.
 import type { Suggestion, Thought, Vault } from "./types";
 
-export const CATEGORIES = ["Idea", "Question", "To-do", "Link", "Quote", "Note", "Feeling"] as const;
+export const CATEGORIES = ["Idea", "To-do", "Question", "Link", "Quote", "Note"] as const;
 
 const RULES: [string, RegExp][] = [
   ["Link", /https?:\/\/\S+/i],
@@ -11,7 +11,6 @@ const RULES: [string, RegExp][] = [
   ["Idea", /\b(what if|idea:|how might we|could we|imagine|wouldn't it be|app that|product that|feature)\b/i],
   ["Quote", /^["“].+["”](\s*[-—–]\s*\S+)?$/],
   ["Question", /\?\s*$|^(why|how|when|where|who|which|is|are|does|do|can|should)\b/i],
-  ["Feeling", /\b(i feel|i'm feeling|feeling|grateful|anxious|happy|sad|tired|excited)\b/i],
 ];
 
 const STOP = new Set(

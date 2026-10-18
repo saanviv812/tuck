@@ -29,9 +29,9 @@
         <textarea id="text" class="field" spellcheck="true" rows="4" autofocus placeholder="What's on your mind?"></textarea>
 
         <footer class="row">
-          <button class="btn vault-btn" id="vault-btn" aria-haspopup="listbox" aria-expanded="false" title="Put it in a vault (optional). Ctrl+1 to 9 picks one">
+          <button class="btn vault-btn" id="vault-btn" aria-haspopup="listbox" aria-expanded="false" title="Tuck it into a pocket (optional). Ctrl+1 to 9 picks one">
             <span class="chip-dot" id="vault-dot"></span>
-            <span id="vault-name">unsorted</span>
+            <span id="vault-name">main pocket</span>
             <svg width="8" height="8" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 2h8v2H6v2H2V4H0z" fill="currentColor"/></svg>
           </button>
           <span class="hint" id="hint" title="Shift+Enter for a new line"><span class="kbd">esc</span> close</span>
@@ -39,9 +39,9 @@
         </footer>
 
         <div class="picker win" id="picker" hidden>
-          <ul role="listbox" id="picker-list" aria-label="Choose a vault"></ul>
+          <ul role="listbox" id="picker-list" aria-label="Choose a pocket"></ul>
           <form class="new-vault" id="new-vault" hidden>
-            <input class="field" id="new-vault-name" maxlength="40" placeholder="name your vault" aria-label="New vault name" />
+            <input class="field" id="new-vault-name" maxlength="40" placeholder="name your pocket" aria-label="New pocket name" />
           </form>
         </div>
       </div>

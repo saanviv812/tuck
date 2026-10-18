@@ -1,0 +1,169 @@
+<title>tuck</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="tuck is a tiny Windows app for catching thoughts. Press a shortcut, type, press Enter. A little pixel buddy keeps it safe on your computer.">
+<style>
+/*{{CSS}}*/
+</style>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top" aria-label="tuck home"><canvas id="logo-buddy" aria-hidden="true"></canvas><span class="word">tuck</span><span class="ver">v0.1</span></a>
+    <nav class="top-nav" aria-label="Sections">
+      <a href="#how">how it works</a>
+      <a href="#buddies">buddies</a>
+      <a href="#faq">faq</a>
+    </nav>
+    <a class="btn primary" href="{{RELEASES}}">download</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- hero: the product itself, working -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow caps">for windows · free · 1.9 MB</p>
+      <h1 id="hero-title">catch thoughts before they fly off.</h1>
+      <p class="lede">press a shortcut from anywhere, type the thing, hit enter. a little pixel buddy tucks it away, and you're back to what you were doing. sort it out later. or never.</p>
+      <div class="cta-row">
+        <a class="btn primary big" href="{{RELEASES}}">download for windows</a>
+        <a class="btn big" href="{{REPO}}">view on github</a>
+      </div>
+      <p class="fine">windows 10 &amp; 11 · no account · works offline · <a href="{{REPO}}/blob/main/LICENSE">MIT licence</a></p>
+    </div>
+
+    <div class="demo" aria-label="Try the tuck popup">
+      <div class="demo-stage">
+        <div class="perch" id="demo-perch">
+          <div class="bubble" id="demo-bubble" role="status" aria-live="polite" hidden></div>
+        </div>
+        <div class="win popup" id="demo-win">
+          <div class="titlebar"><span class="title">tuck a thought</span><span class="tbtn" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges"><path d="M1 1h8v2H1zM1 4h8v2H1zM1 7h8v2H1z" fill="currentColor"/></svg></span><span class="tbtn" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges"><path d="M1 1h2v2H1zM3 3h2v2H3zM5 5h2v2H5zM7 7h2v2H7zM7 1h2v2H7zM5 3h2v2H5zM3 5h2v2H3zM1 7h2v2H1z" fill="currentColor"/></svg></span></div>
+          <div class="popup-body">
+            <label class="sr" for="demo-text">Type a thought to try it</label>
+            <textarea id="demo-text" class="field" rows="3" placeholder="What's on your mind? try typing here"></textarea>
+            <div class="row">
+              <span class="chip"><span class="chip-dot"></span>main pocket</span>
+              <span class="hint"><span class="kbd">esc</span> close</span>
+              <button class="btn primary" id="demo-save" type="button">save ↵</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tucked" aria-label="Thoughts you tucked in this demo">
+        <p class="tucked-label caps">tucked away <span class="muted">(this demo keeps them in your browser tab only)</span></p>
+        <ol id="demo-list">
+          <li><span class="t">what if the app remembered where I left off?</span><span class="m">idea · #apps</span></li>
+          <li><span class="t">buy oat milk, batteries and a birthday card</span><span class="m">to-do · #shopping</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- how it works: a real 3-step sequence -->
+  <section class="band" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 id="how-title">three steps. that's the whole thing.</h2>
+      <ol class="steps">
+        <li>
+          <div class="keys"><span class="key">Ctrl</span><span class="key">Shift</span><span class="key wide">Space</span></div>
+          <h3>press the shortcut</h3>
+          <p>from a browser, a doc, a game, anything. the popup opens on whichever screen you're looking at, already ready to type.</p>
+        </li>
+        <li>
+          <div class="keys"><span class="key ghost">what if…</span></div>
+          <h3>type the thought</h3>
+          <p>no title, no folder, no formatting. as long or short as you like. need a new line? <span class="kbd">Shift</span> + <span class="kbd">Enter</span>.</p>
+        </li>
+        <li>
+          <div class="keys"><span class="key wide">Enter ↵</span></div>
+          <h3>press enter</h3>
+          <p>saved to your computer in about 50 ms. your buddy does a little hop, and the popup gets out of the way.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- buddies -->
+  <section class="wrap" id="buddies" aria-labelledby="buddies-title">
+    <div class="section-head">
+      <h2 id="buddies-title">pick a buddy. the whole app follows.</h2>
+      <p>nine of them, drawn pixel by pixel. they watch your cursor, blink, breathe, look at what you type, hop when you save, and nap if you leave them alone. click one to see the page change colour, just like the app does.</p>
+    </div>
+    <div class="taskbar" role="radiogroup" aria-label="Choose a buddy" id="cast"></div>
+    <p class="cast-note" id="cast-note" aria-live="polite"></p>
+  </section>
+
+  <!-- what's inside -->
+  <section class="band" aria-labelledby="inside-title">
+    <div class="wrap">
+      <h2 id="inside-title">small on purpose. still has everything.</h2>
+      <dl class="inside">
+        <div><dt>a desk buddy</dt><dd>your buddy can live on top of your taskbar and wander a bit. double-click it to write. right-click it to make it nap, dance or stay put.</dd></div>
+        <div><dt>a library for later</dt><dd>every thought, newest first, grouped by day. search everything, tuck things into pockets (folders, but cosier), tag, edit, archive.</dd></div>
+        <div><dt>little suggestions</dt><dd>"this looks like an idea. tag it #onboarding?" yes or no thanks. simple word rules on your computer, no AI, and it never changes what you wrote.</dd></div>
+        <div><dt>drafts that stick around</dt><dd>closed the popup by accident? whatever you typed is still there next time.</dd></div>
+        <div><dt>updates itself</dt><dd>new versions download quietly. you click "restart to update" whenever you feel like it.</dd></div>
+        <div><dt>keyboard all the way</dt><dd>save, close, pick a pocket, search and move around without touching the mouse.</dd></div>
+      </dl>
+      <div class="numbers" aria-label="Measured on a Windows 11 laptop">
+        <p><b>1.9 MB</b><span>installer</span></p>
+        <p><b>~30 ms</b><span>shortcut to typing</span></p>
+        <p><b>~50 ms</b><span>enter to saved on disk</span></p>
+        <p><b>0</b><span>accounts, ads or trackers</span></p>
+      </div>
+      <p class="fine">measured on a regular Windows 11 laptop.</p>
+    </div>
+  </section>
+
+  <!-- privacy -->
+  <section class="wrap privacy" aria-labelledby="privacy-title">
+    <div class="win note">
+      <div class="titlebar"><span class="title">privacy.txt</span></div>
+      <div class="note-body">
+        <h2 id="privacy-title">your thoughts never leave your computer.</h2>
+        <p>no account. no cloud. no tracking. no ads. everything lives in one plain file you can open in Notepad:</p>
+        <p><code>%APPDATA%\app.tuck.desktop\thoughts.json</code></p>
+        <p>it keeps a backup copy, and it never half-writes the file, so a crash or a power cut can't eat your thoughts. the only time tuck goes online is to check for an update.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section class="band" id="faq" aria-labelledby="faq-title">
+    <div class="wrap narrow">
+      <h2 id="faq-title">questions</h2>
+      <details><summary>windows says "Windows protected your PC". is it safe?</summary><p>windows shows that for apps it hasn't seen much of yet, and tuck is brand new. click <b>More info</b>, then <b>Run anyway</b>. tuck never sends your thoughts anywhere, and all of its code is open on GitHub for anyone to check.</p></details>
+      <details><summary>how do the suggestions work without AI?</summary><p>simple rules. "what if…" usually means an idea, "remember to…" a to-do, a web address a link. tags come from your #hashtags and the most distinctive words, and a pocket gets suggested when your words match what's already in it. it's instant and private, and it can guess wrong, so you always get to say yes or no thanks.</p></details>
+      <details><summary>is it really free?</summary><p>yes. it's open source under the MIT licence.</p></details>
+      <details><summary>what if Ctrl + Shift + Space is already taken?</summary><p>pick any shortcut you like in settings. tuck tells you if another app already has it.</p></details>
+      <details><summary>does it work offline?</summary><p>completely. it only needs the internet to check for updates.</p></details>
+      <details><summary>is the buddy distracting?</summary><p>it's small and calm. if you'd still rather not, tell it to stay put, or hide it from the tray. the popup works the same.</p></details>
+      <details><summary>mac or linux?</summary><p>not yet. windows 10 and 11 for now.</p></details>
+      <details><summary>how do i move my thoughts to a new computer?</summary><p>install tuck there, quit it, then copy your <code>thoughts.json</code> into the same folder.</p></details>
+    </div>
+  </section>
+
+  <!-- download -->
+  <section class="wrap get" id="download" aria-labelledby="get-title">
+    <h2 id="get-title">get tuck</h2>
+    <ol class="get-steps">
+      <li>open the <a href="{{RELEASES}}">latest release</a> and download the file ending in <b>-setup.exe</b></li>
+      <li>open it. tuck is new, so windows might say it doesn't recognise it yet. click <b>More info</b>, then <b>Run anyway</b></li>
+      <li>click through the installer. no admin password needed</li>
+      <li>press <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">Space</span> and tuck your first thought</li>
+    </ol>
+    <a class="btn primary big" href="{{RELEASES}}">download for windows</a>
+    <p class="fine">tuck is open source, so anyone can <a href="{{REPO}}">read exactly what it does</a>.</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>tuck is a little pixel world, curated by saanvi ♡</span>
+    <span><a href="{{REPO}}">github</a> · <a href="{{REPO}}/blob/main/LICENSE">MIT licence</a> · <a href="{{REPO}}/blob/main/PRIVACY.md">privacy</a> · font: <a href="https://departuremono.com">Departure Mono</a></span>
+  </div>
+</footer>
+
+<script>
+/*{{JS}}*/
+</script>

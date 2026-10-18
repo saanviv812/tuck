@@ -17,8 +17,8 @@ The number lives in two places and they must match:
 ## one-time setup
 
 1. **GitHub repo:** create `tuck` on your personal account and push the code
-2. **set the update address:** in `src-tauri/tauri.conf.json`, replace
-   `YOUR-GITHUB-USERNAME` in `plugins.updater.endpoints` with your username
+2. **the update address** is set in `src-tauri/tauri.conf.json` →
+   `plugins.updater.endpoints` (currently `saanviv812/tuck`). change it if the repo moves
 3. **add the signing key as secrets** (repo → Settings → Secrets and variables → Actions):
    - `TAURI_SIGNING_PRIVATE_KEY`: the contents of `~/.tauri/thoughtcatcher.key`
    - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`: leave empty (the key has no password)
@@ -68,7 +68,7 @@ above have the exact steps.
 | --- | --- | --- |
 | **GitHub Releases** | v0.1 | the source of truth; the updater reads from here |
 | **winget** | after v0.1 is stable | lets people run `winget install tuck`. submit a manifest to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs); NSIS installs silently with `/S`, scope `user` |
-| **a simple website** | with the launch | one page: the buddy row, the popup gif, one big download button pointing at the latest release. GitHub Pages works |
+| **the website** | now | `site/`, built with `npm run site` and published to GitHub Pages by [`site.yml`](../.github/workflows/site.yml) on every push. turn it on once: repo → Settings → Pages → Source: **GitHub Actions**. lives at `https://saanviv812.github.io/tuck/` |
 | **Microsoft Store** | later | needs code signing and a store listing; widest reach on Windows |
 | **Mac / Linux** | later | the code is cross-platform; needs testing, Apple notarisation, and Linux packages |
 
@@ -119,7 +119,7 @@ There's no tracking in the app, on purpose. Feedback comes from:
 | --- | --- |
 | code signing | removes the scary warning, the biggest drop-off |
 | winget listing | one-line install for developers |
-| more buddies + seasonal ones | the most-requested kind of thing for apps like this |
+| more buddies + seasonal ones | the most-requested type of thing for apps like this |
 | reminders on a thought | "remember to…" thoughts are common |
 | Mac build | many designers are on Mac |
 | optional sync (bring your own folder, e.g. OneDrive) | keeps it local-first |

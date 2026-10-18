@@ -116,7 +116,7 @@ await check("popup: '+ new vault' creates and selects a vault", async () => {
   const name = await js(`return document.getElementById("vault-name").textContent`);
   return s.vaults.length === 1 && name === "product thinking" ? true : `vaults=${s.vaults.length} label=${name}`;
 });
-await check("popup: Ctrl+0 goes back to unsorted", async () => { await key("0", 2, ""); return js(`return document.getElementById("vault-name").textContent === "unsorted"`); });
+await check("popup: Ctrl+0 goes back to the main pocket", async () => { await key("0", 2, ""); return js(`return document.getElementById("vault-name").textContent === "main pocket"`); });
 await check("popup: Ctrl+1 picks the first vault", async () => { await key("1", 2, ""); return js(`return document.getElementById("vault-name").textContent === "product thinking"`); });
 await check("popup: saving into a vault files it there", async () => {
   await js(`const t=document.getElementById("text"); t.focus(); t.value="";`);
@@ -136,10 +136,10 @@ await go("/windows/library/?demo");
 await sleep(500);
 const items = () => js(`return document.querySelectorAll("#thoughts .item").length`);
 await check("library: opens on 'all thoughts'", async () => (await items()) === 6 || `items=${await items()}`);
-await check("library: 'unsorted' shows only thoughts not in a vault", async () => { await js(`document.querySelector('[data-vault="inbox"]').click()`); return (await items()) === 3 || `items=${await items()}`; });
+await check("library: 'main pocket' shows thoughts you didn't file", async () => { await js(`document.querySelector('[data-vault="inbox"]').click()`); return (await items()) === 3 || `items=${await items()}`; });
 await check("library: 'all thoughts' shows everything", async () => { await js(`document.querySelector('[data-vault="all"]').click()`); return (await items()) === 6 || `items=${await items()}`; });
 await check("library: clicking a vault filters to it", async () => {
-  await js(`[...document.querySelectorAll("[data-vault]")].find(b => b.textContent.includes("product"))?.click()`);
+  await js(`[...document.querySelectorAll("[data-vault]")].find(b => b.textContent.includes("ideas"))?.click()`);
   return (await items()) === 2 || `items=${await items()}`;
 });
 await check("library: search finds a thought", async () => {
@@ -180,7 +180,7 @@ await check("library: accepting a suggestion applies it", async () => {
   await js(`[...document.querySelectorAll("#thoughts .item")].find(li => li.textContent.includes("suggestion"))?.click()`); await sleep(100);
   await js(`document.getElementById("accept").click()`); await sleep(300);
   const t = (await state()).thoughts.find((x) => x.text.includes("mascot reacts"));
-  return t.suggestion === null && t.category === "Idea" && t.tags.includes("mascot") ? true : JSON.stringify(t);
+  return t.suggestion === null && t.category === "Idea" && t.tags.includes("apps") && t.vault_id !== null ? true : JSON.stringify(t);
 });
 await check("library: archive hides a thought and it shows in the archive", async () => {
   const n = (await state()).thoughts.filter((t) => t.archived).length;

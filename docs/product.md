@@ -41,7 +41,7 @@ makes them open it, tell a friend, and keep it installed.
 | friction | how tuck removes it |
 | --- | --- |
 | switching apps | a global shortcut opens the popup over whatever you're in |
-| deciding where it goes | everything lands in "unsorted". vaults are optional, now or later |
+| deciding where it goes | everything lands in "main pocket". pockets are optional, now or later |
 | titles and formatting | no title. no formatting. just text |
 | waiting (sync, loading, AI) | the popup is already loaded; saving is local and takes ~50 ms |
 | losing half-written thoughts | the draft is kept if you close the box by accident |
@@ -51,7 +51,7 @@ makes them open it, tell a friend, and keep it installed.
 
 1. **Saving comes first.** Nothing (organising, suggestions, animations) is
    allowed to slow down or block saving.
-2. **Zero required decisions.** You never *have* to pick a vault, tag or type.
+2. **Zero required decisions.** You never *have* to pick a pocket, tag or type.
 3. **Get out of the way.** The popup closes itself and gives focus back.
 4. **Your data is yours.** One readable file, on your computer, no account.
 5. **Charm, not noise.** The buddy is small and calm. It never interrupts you.
@@ -62,10 +62,10 @@ makes them open it, tell a friend, and keep it installed.
 **In:**
 
 - global shortcut + popup with a buddy, multiline text, Enter to save
-- drafts kept on dismiss, vault picker (optional), #hashtags
-- library: all thoughts / unsorted / vaults / archived, search, filters by kind
-  and tag, chronological list, edit, archive, delete, move, rename/colour/delete vaults
-- local suggestions (kind, tags, vault) that you accept or ignore
+- drafts kept on dismiss, pocket picker (optional), #hashtags
+- library: all thoughts / main pocket / pockets / archived, search, filters by type
+  and tag, chronological list, edit, archive, delete, move, rename/colour/delete pockets
+- local suggestions (type, tags, pocket) that you accept or ignore
 - 9 buddies with idle, blink, cursor-following eyes, thinking, happy, poke,
   surprised and sleepy states; the app recolours to the buddy
 - desk buddy on the taskbar: wander, drag, nap, right-click menu

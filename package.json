@@ -10,7 +10,8 @@
     "app:build": "tauri build",
     "test:ui": "node tests/ui-audit.mjs",
     "icons": "python scripts/make-icon.py && tauri icon scripts/out/icon-1024.png",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "site": "node scripts/build-site.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.1.1",
@@ -23,5 +24,12 @@
     "typescript": "^5.6.3",
     "vite": "^6.0.3"
   },
-  "description": "A tiny desktop app for catching thoughts before they fly off."
+  "description": "A tiny desktop app for catching thoughts before they fly off.",
+  "license": "MIT",
+  "author": "Saanvi Varma",
+  "homepage": "https://saanviv812.github.io/tuck/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saanviv812/tuck.git"
+  }
 }

@@ -77,14 +77,12 @@ function renderSide() {
   const count = (pred: (t: Thought) => boolean) => active.filter(pred).length;
   type Row = { id: VaultSel; name: string; n: number; v: Vault | null; drop: boolean; hint: string };
   const item = (r: Row) => `<li><button data-vault="${r.id}" ${r.drop ? `data-drop="${r.id}"` : ""} title="${esc(r.hint)}" aria-current="${view.vault === r.id && !view.archived}">${r.id === "all" ? `<span class="chip-dot" style="background:var(--lo)"></span>` : dot(r.v)}<span class="name">${esc(r.name)}</span><span class="n">${r.n || ""}</span></button></li>`;
-  $("view-top").innerHTML = [
-    { id: "all", name: "all thoughts", n: active.length, v: null, drop: false, hint: "everything you've tucked away" },
-    { id: "inbox", name: "unsorted", n: count((t) => !t.vault_id), v: null, drop: true, hint: "thoughts that aren't in a vault yet" },
-  ].map(item).join("");
+  $("view-top").innerHTML = item({ id: "all", name: "all thoughts", n: active.length, v: null, drop: false, hint: "everything you've tucked away" });
   const list = $("vault-list");
-  list.innerHTML = data.vaults.length
-    ? data.vaults.map((v) => item({ id: v.id, name: v.name, n: count((t) => t.vault_id === v.id), v, drop: true, hint: `thoughts in ${v.name}` })).join("")
-    : `<li class="muted" style="padding:2px 8px 4px">folders for your thoughts. make one below</li>`;
+  list.innerHTML = [
+    item({ id: "inbox", name: "main pocket", n: count((t) => !t.vault_id), v: null, drop: true, hint: "where thoughts go when you don't pick a pocket" }),
+    ...data.vaults.map((v) => item({ id: v.id, name: v.name, n: count((t) => t.vault_id === v.id), v, drop: true, hint: `thoughts in ${v.name}` })),
+  ].join("") + (data.vaults.length ? "" : `<li class="muted" style="padding:2px 8px 4px">make more pockets for different things, like ideas or reading</li>`);
 
   const archivedN = data.thoughts.filter((t) => t.archived).length;
   $("view-list").innerHTML = `<li><button data-archived="1" title="thoughts you've put aside" aria-current="${view.archived}"><span class="name">archived</span><span class="n">${archivedN || ""}</span></button></li>`;
@@ -143,7 +141,7 @@ for (const el of ["vault-list", "view-top"]) $(el).addEventListener("drop", asyn
   if (!b || !id) return;
   const vault_id = b.dataset.drop === "inbox" ? null : b.dataset.drop!;
   await store.updateThought(id, { vault_id });
-  toast(`moved to ${vault_id ? vaultOf(vault_id)?.name : "unsorted"}`);
+  toast(`moved to ${vault_id ? vaultOf(vault_id)?.name : "main pocket"}`);
 });
 
 $("add-vault").addEventListener("click", () => {
@@ -171,7 +169,7 @@ $("vault-name").addEventListener("blur", () => setTimeout(() => { $("vault-form"
 function renderList() {
   visible = data.thoughts.filter(matches).sort((a, b) => b.created_at - a.created_at);
   const v = vaultOf(view.vault);
-  const title = view.archived ? "archived" : view.vault === "all" ? "all thoughts" : view.vault === "inbox" ? "unsorted" : v?.name ?? "all thoughts";
+  const title = view.archived ? "archived" : view.vault === "all" ? "all thoughts" : view.vault === "inbox" ? "main pocket" : v?.name ?? "all thoughts";
   $("list-title").textContent = title;
   $("list-count").innerHTML = `${visible.length}${view.category ? ` · ${esc(view.category.toLowerCase())}` : ""}${view.tag ? ` · #${esc(view.tag)}` : ""}${
     v && !view.archived ? ` · <button class="btn ghost" id="rename-vault">rename</button><button class="btn ghost" id="recolor-vault">colour</button><button class="btn ghost" id="delete-vault">delete</button>` : ""}`;
@@ -183,8 +181,8 @@ function renderList() {
       view.q ? `<span class="big">nothing matches "${esc(view.q)}"</span><span>try fewer words, or a #tag</span>`
       : nothingAtAll ? `<span class="big">no thoughts yet</span><span>press <span class="kbd">${esc(data.settings.shortcut)}</span> anywhere</span>`
       : view.archived ? `<span class="big">nothing archived</span><span>thoughts you archive rest here. you can bring them back anytime</span>`
-      : view.vault === "inbox" ? `<span class="big">all sorted!</span><span>every thought is in a vault</span>`
-      : `<span class="big">this vault is empty</span><span>drag thoughts here, or pick it when you catch one</span>`}</li>`;
+      : view.vault === "inbox" ? `<span class="big">your main pocket is empty</span><span>new thoughts land here when you don't pick a pocket</span>`
+      : `<span class="big">this pocket is empty</span><span>drag thoughts here, or pick it when you tuck one</span>`}</li>`;
     return;
   }
   let html = "";
@@ -196,7 +194,7 @@ function renderList() {
     const s = t.suggestion;
     html += `<li class="item${t.archived ? " archived" : ""}" role="option" draggable="true" data-id="${t.id}" aria-selected="${t.id === selected}">
       <div class="text">${highlight(t.text)}</div>
-      <div class="meta">${dot(vv)}<span>${timeLabel(t.created_at)}</span>${view.vault === "all" || view.archived ? `<span>${esc(vv?.name ?? "unsorted")}</span>` : ""}${t.category ? `<span>${esc(t.category.toLowerCase())}</span>` : ""}${t.tags.slice(0, 3).map((g) => `<span>#${esc(g)}</span>`).join("")}${s ? `<span class="sugg" title="${esc(byId(data.settings.buddy).name)} has a suggestion">✦ suggestion</span>` : ""}</div>
+      <div class="meta">${dot(vv)}<span>${timeLabel(t.created_at)}</span>${view.vault === "all" || view.archived ? `<span>${esc(vv?.name ?? "main pocket")}</span>` : ""}${t.category ? `<span>${esc(t.category.toLowerCase())}</span>` : ""}${t.tags.slice(0, 3).map((g) => `<span>#${esc(g)}</span>`).join("")}${s ? `<span class="sugg" title="${esc(byId(data.settings.buddy).name)} has a suggestion">✦ suggestion</span>` : ""}</div>
     </li>`;
   }
   ol.innerHTML = html;
@@ -238,9 +236,9 @@ $("list-count").addEventListener("click", async (e) => {
     if (btn.dataset.armed) {
       await store.deleteVault(v.id);
       view.vault = "all";
-      toast(`deleted "${v.name}". its thoughts are in unsorted now`);
+      toast(`deleted "${v.name}". its thoughts moved to your main pocket`);
     } else {
-      btn.dataset.armed = "1"; btn.textContent = "really delete?";
+      btn.dataset.armed = "1"; btn.textContent = "delete for good?";
       setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.textContent = "delete"; } }, 3000);
     }
   }
@@ -299,13 +297,13 @@ function renderDetail() {
       <div class="row"><button class="btn" id="accept">use this</button><button class="btn ghost" id="dismiss">no thanks</button></div>
     </div>` : ""}
     <div class="meta-grid">
-      <span>caught</span><div>${dayLabel(t.created_at)}, ${timeLabel(t.created_at)}${t.updated_at - t.created_at > 60000 ? ` · edited ${dayLabel(t.updated_at)}` : ""}</div>
-      <label for="m-vault">vault</label>
-      <select id="m-vault"><option value="">unsorted</option>${data.vaults.map((v) => `<option value="${v.id}" ${t.vault_id === v.id ? "selected" : ""}>${esc(v.name)}</option>`).join("")}</select>
-      <label for="m-cat">kind</label>
-      <select id="m-cat"><option value="">—</option>${[...new Set([...CATEGORIES, ...(t.category ? [t.category] : [])])].map((c) => `<option ${t.category === c ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>
+      <span>tucked</span><div>${dayLabel(t.created_at)}, ${timeLabel(t.created_at)}${t.updated_at - t.created_at > 60000 ? ` · edited ${dayLabel(t.updated_at)}` : ""}</div>
+      <label for="m-vault">pocket</label>
+      <select id="m-vault"><option value="">main pocket</option>${data.vaults.map((v) => `<option value="${v.id}" ${t.vault_id === v.id ? "selected" : ""}>${esc(v.name)}</option>`).join("")}</select>
+      <label for="m-cat">type</label>
+      <select id="m-cat" title="what sort of thought this is, so you can filter by it"><option value="">no type</option>${[...new Set([...CATEGORIES, ...(t.category ? [t.category] : [])])].map((c) => `<option value="${esc(c)}" ${t.category === c ? "selected" : ""}>${esc(c.toLowerCase())}</option>`).join("")}</select>
       <label for="m-tags">tags</label>
-      <input id="m-tags" value="${esc(t.tags.join(", "))}" placeholder="comma, separated" spellcheck="false" />
+      <input id="m-tags" value="${esc(t.tags.join(", "))}" placeholder="words to find it by, like: work, recipes" title="words to find it by later. put a comma between them" spellcheck="false" />
     </div>
     <div class="actions">
       <button class="btn" id="archive" title="${t.archived ? "bring it back" : "put it aside without deleting it"}">${t.archived ? "restore" : "archive"}</button>
@@ -336,7 +334,7 @@ function renderDetail() {
       selected = visible[i + 1]?.id ?? visible[i - 1]?.id ?? null;
       toast("deleted");
     } else {
-      del.dataset.armed = "1"; del.textContent = "really delete?";
+      del.dataset.armed = "1"; del.textContent = "delete for good?";
       setTimeout(() => { if (del.isConnected) { delete del.dataset.armed; del.textContent = "delete"; } }, 3000);
     }
   });
@@ -544,21 +542,21 @@ async function seedDemo() {
   const want = new URLSearchParams(location.search).get("buddy");
   if (!isTauri && want) { const st = await store.load(); await store.saveSettings({ ...st.settings, buddy: want }); }
   if (isTauri || !location.search.includes("demo") || (await store.load()).thoughts.length) return;
-  const pt = await store.addVault("product thinking", "sage");
+  const pt = await store.addVault("ideas", "sage");
   const rd = await store.addVault("reading list", "sky");
   const samples: [string, string | null, string | null, string[]][] = [
-    ["What if a product's onboarding adapted to the user's existing knowledge?", pt.id, "Idea", ["onboarding", "personalization"]],
-    ["remember to email priya about the research synthesis", null, "To-do", []],
-    ["https://www.are.na — look at how they handle channels vs blocks", rd.id, "Link", ["reference"]],
-    ["why do empty states always apologise? they could invite instead", pt.id, "Question", ["microcopy"]],
-    ["the quiet after rain makes everything feel possible", null, "Feeling", []],
+    ["what if the app remembered where I left off?", pt.id, "Idea", ["apps"]],
+    ["remember to email priya about the research notes", null, "To-do", ["work"]],
+    ["https://www.are.na — save for later", rd.id, "Link", ["reference"]],
+    ["dark mode should remember my last choice", pt.id, "Idea", ["settings"]],
+    ["buy oat milk, batteries and a birthday card", null, "To-do", ["shopping"]],
   ];
   for (const [text, v, category, tags] of samples.reverse()) {
     const t = await store.addThought(text, v);
     await store.updateThought(t.id, { category, tags });
   }
-  const t = await store.addThought("a shortcut-first notes app where the mascot reacts to what you write", null);
-  await store.updateThought(t.id, { suggestion: { category: "Idea", tags: ["mascot", "shortcut"], vault_id: pt.id } });
+  const t = await store.addThought("a notes app where the mascot reacts to what you write", null);
+  await store.updateThought(t.id, { suggestion: { category: "Idea", tags: ["apps"], vault_id: pt.id } });
 }
 
 store.onChange(reload);

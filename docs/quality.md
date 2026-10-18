@@ -4,9 +4,9 @@
 
 [`tests/ui-audit.mjs`](../tests/ui-audit.mjs) drives the real popup and library
 pages in a hidden, separate Edge window and checks 46 things: typing, Enter,
-Shift+Enter, empty saves, drafts, every vault picker path, search, filters,
+Shift+Enter, empty saves, drafts, every pocket picker path, search, filters,
 selection, editing, tags, moving, suggestions, archive/restore, two-step
-delete, vault create/rename/delete, settings preview/cancel/save/Esc, theme
+delete, pocket create/rename/delete, settings preview/cancel/save/Esc, theme
 colours, and "only one buddy on screen".
 
 ```bash
@@ -59,7 +59,7 @@ Do these on a clean Windows user account if you can.
 - [ ] type, Enter: bubble, hop, popup closes, focus returns
 - [ ] `Esc` keeps the draft; it's back next time
 - [ ] ☰ and × in the popup work
-- [ ] library: search, vaults, drag to vault, edit, archive, delete
+- [ ] library: search, pockets, drag to pocket, edit, archive, delete
 - [ ] settings: preview a buddy, cancel (colour goes back), save (colour stays)
 - [ ] change the shortcut; the new one works, the old one doesn't
 - [ ] desk buddy: double-click, drag and drop, right-click menu items, hide, show from tray

@@ -74,7 +74,7 @@ pub fn delete_thought(app: AppHandle, db: Db, id: String) -> Result<(), String> 
 pub fn add_vault(app: AppHandle, db: Db, name: String, color: String) -> Result<Vault, String> {
     let name = name.trim().to_string();
     if name.is_empty() {
-        return Err("a vault needs a name".into());
+        return Err("a pocket needs a name".into());
     }
     with_store(&app, &db, |s| {
         let v = Vault { id: new_id(), name, color, created_at: now_ms() };
@@ -203,7 +203,7 @@ pub fn open_data_dir(app: AppHandle, db: Db) -> Result<(), String> {
 pub fn export_markdown(app: AppHandle, db: Db) -> Result<String, String> {
     let s = db.lock().map_err(|_| "store is busy")?.state.clone();
     let mut out = String::from("# my thoughts\n\n");
-    let mut groups: Vec<(String, Option<String>)> = vec![("Unsorted".into(), None)];
+    let mut groups: Vec<(String, Option<String>)> = vec![("Main pocket".into(), None)];
     groups.extend(s.vaults.iter().map(|v| (v.name.clone(), Some(v.id.clone()))));
     for (name, id) in groups {
         let items: Vec<&Thought> = s.thoughts.iter().filter(|t| t.vault_id == id && !t.archived).collect();

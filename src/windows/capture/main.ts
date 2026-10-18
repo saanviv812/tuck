@@ -67,13 +67,13 @@ const vaults = (): Vault[] => state?.vaults ?? [];
 function renderVault() {
   const v = vaults().find((x) => x.id === vaultId);
   if (!v) vaultId = null;
-  vaultName.textContent = v ? v.name : "unsorted";
+  vaultName.textContent = v ? v.name : "main pocket";
   vaultDot.style.background = v ? `var(--v-${v.color})` : "var(--face)";
 }
 
 let pickIndex = 0;
 function openPicker() {
-  const items = [{ id: null as string | null, name: "unsorted", color: "" }, ...vaults()];
+  const items = [{ id: null as string | null, name: "main pocket", color: "" }, ...vaults()];
   pickerList.innerHTML = "";
   items.forEach((v, i) => {
     const li = document.createElement("li");
@@ -87,7 +87,7 @@ function openPicker() {
   const add = document.createElement("li");
   add.className = "add";
   add.setAttribute("role", "option");
-  add.textContent = "+ new vault";
+  add.textContent = "+ new pocket";
   add.addEventListener("click", startNewVault);
   pickerList.append(add);
   pickIndex = Math.max(0, items.findIndex((v) => v.id === vaultId));

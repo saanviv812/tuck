@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="../../releases/latest"><b>download for windows</b></a> ·
+  <a href="https://saanviv812.github.io/tuck/">website</a> ·
   <a href="#how-to-use-it">how to use it</a> ·
   <a href="#faq">faq</a>
 </p>
@@ -37,7 +38,7 @@ that's fine too.
 that's the whole thing you see most days. a box, your buddy on top of it, and
 the words "what's on your mind?"
 
-<p align="center"><img src="docs/images/library.png" alt="the library window, with vaults on the left, a list of thoughts in the middle and the selected thought on the right" width="760"></p>
+<p align="center"><img src="docs/images/library.png" alt="the library window, with pockets on the left, a list of thoughts in the middle and the selected thought on the right" width="760"></p>
 
 and this is where everything ends up, when you feel like looking back.
 
@@ -48,8 +49,9 @@ and this is where everything ends up, when you feel like looking back.
 1. go to the [**releases page**](../../releases/latest)
 2. under **Assets**, click the file that ends in **`-setup.exe`** (something like `tuck_0.1.0_x64-setup.exe`)
 3. open it once it's downloaded
-4. windows might show a blue box saying **"Windows protected your PC"**. that's
-   normal for new apps that aren't signed yet. click **More info**, then **Run anyway**
+4. tuck is new, so windows might show a blue box saying **"Windows protected your
+   PC"**. it just means windows hasn't seen tuck much yet. click **More info**, then
+   **Run anyway**. all of tuck's code is right here if you'd like to check it
 5. click through the installer. it doesn't need an admin password, and it only
    installs for you
 6. that's it. tuck opens, and you'll see your buddy hanging out on the taskbar
@@ -76,7 +78,7 @@ a doc, a game, anything.
 - **press `Enter`** to save it. your buddy hops, says "got it. tucked away.", and the box disappears
 - **need a new line?** `Shift` + `Enter`
 - **changed your mind?** press **`Esc`** or click anywhere else. whatever you typed is kept and will be waiting next time you open the box
-- **want it in a vault?** click the **unsorted ▾** button (or press `Ctrl` + `1` for your first vault, `Ctrl` + `2` for the second, and so on. `Ctrl` + `0` puts it back to unsorted). totally optional
+- **want it in a pocket?** click the **main pocket ▾** button (or press `Ctrl` + `1` for your first pocket, `Ctrl` + `2` for the second, and so on. `Ctrl` + `0` puts it back in your main pocket). totally optional
 
 the two little buttons in the corner:
 
@@ -95,10 +97,10 @@ the Start menu.
 | thing | what it is |
 | --- | --- |
 | **all thoughts** | everything you've ever tucked away |
-| **unsorted** | only the thoughts that aren't in a vault yet |
-| **vaults** | like folders. make one with **+ new vault**. drag thoughts onto a vault to move them there |
+| **main pocket** | where thoughts go when you don't pick a pocket |
+| **pockets** | like folders. make one with **+ new pocket**. drag thoughts onto a pocket to move them there |
 | **archived** | thoughts you've put aside. they're not deleted, you can bring them back |
-| **kinds** | tuck guesses what each thought is (an idea, a to-do, a link, a question, a feeling, a quote). click one to see just those |
+| **types** | what sort of thought each one is: an idea, a to-do, a question, a link, a quote or a note. click one to see just those |
 | **tags** | your #tags. click one to filter |
 
 **in the middle** is the list, newest first, grouped by day. use the **search box**
@@ -108,20 +110,20 @@ at the top (or press **`/`**) to find anything. it searches your words and your
 **on the right** is the thought you clicked:
 
 - just click into the text and edit it. it saves by itself
-- **vault**: move it somewhere
-- **kind**: change what type of thought it is
-- **tags**: type tags separated by commas
+- **pocket**: move it somewhere
+- **type**: what sort of thought it is (idea, to-do, question…), so you can filter by it later
+- **tags**: words to find it by later, like `work` or `recipes`. put a comma between them
 - **archive**: put it aside without deleting
 - **delete**: removes it for good. you have to click it twice so you don't do it by accident
 
-if you're looking at a vault, there's also **rename**, **colour** and **delete**
-next to its name at the top. deleting a vault never deletes your thoughts. they
-just go back to unsorted.
+if you're looking at a pocket, there's also **rename**, **colour** and **delete**
+next to its name at the top. deleting a pocket never deletes your thoughts. they
+just move to your main pocket.
 
 ### little suggestions
 
 after you save, tuck sometimes guesses things like *"this looks like an idea.
-tags: #onboarding. vault: product thinking"*. you'll see a small **✦ suggestion**
+tags: #apps. pocket: ideas"*. you'll see a small **✦ suggestion**
 on the thought. open it and pick **use this** or **no thanks**.
 
 it never changes what you actually wrote. and it all happens on your computer.
@@ -131,9 +133,10 @@ no AI service, nothing sent anywhere. you can turn it off in settings.
 
 <p align="center"><img src="docs/images/buddies.png" alt="the nine buddies" width="640"></p>
 
-there are nine to pick from: **nibbles** the mouse, **scoop** the ice cream,
-**latte** the coffee, **momo** the strawberry shortcake, **miso** the cat,
-**cupcake**, **boba**, **clem** the orange and **purin** the pudding.
+there are nine to pick from: **nibbles** the mouse, **scoopie** the ice cream,
+**brewbie** the coffee, **shortie** the strawberry shortcake, **miso** the cat,
+**matcha** the cupcake, **boba** the milk tea, **tango** the orange and
+**wobbles** the pudding.
 
 they're not just decoration. your buddy:
 
@@ -158,7 +161,7 @@ it'll drop back down. **right-click** it for a menu:
 | see all my thoughts | opens the library |
 | hide | puts it away. bring it back from the tray menu |
 
-the whole app changes colour to match your buddy, so scoop gives you a minty
+the whole app changes colour to match your buddy, so scoopie gives you a minty
 app, miso a lavender one, and so on.
 
 ### settings
@@ -169,7 +172,7 @@ click **settings** in the library.
 - **shortcut**: click the button, then press the keys you want (for example `Alt` + `Space`)
 - **let my buddy hang out on the desktop**: the taskbar buddy, on or off
 - **start when I log in**: tuck opens quietly when your computer starts
-- **suggest kinds, tags and vaults**: the little suggestions, on or off
+- **suggest types, tags and pockets**: the little suggestions, on or off
 - **your data**: **show file** opens the folder, **export as markdown** saves everything as a normal text file in your Documents
 
 nothing changes until you press **save changes**. **cancel** (or `Esc`) puts
@@ -194,7 +197,7 @@ the shortcut. use **quit tuck** in the tray menu if you really want it gone.
 | save | `Enter` |
 | new line | `Shift` `Enter` |
 | close the popup (draft stays) | `Esc` |
-| pick a vault in the popup | `Ctrl` `1` … `9` (`Ctrl` `0` = unsorted) |
+| pick a pocket in the popup | `Ctrl` `1` … `9` (`Ctrl` `0` = main pocket) |
 | open the library from the popup | `Ctrl` `L` |
 | search in the library | `/` or `Ctrl` `F` |
 | move through thoughts | `↑` `↓` |
@@ -246,6 +249,14 @@ you can type in any language. the app's own words are in english for now.
 **is it free?**
 yes.
 
+**how do the suggestions work without AI?**
+simple rules, a bit like an old-school spam filter. "what if…" usually means an
+idea, "remember to…" a to-do, a web address a link, a "?" at the end a question.
+tags come from your #hashtags plus the most distinctive words in what you wrote.
+a pocket gets suggested when your words match that pocket's name or the thoughts
+already in it. it's instant and private, and it can guess wrong, which is why you
+always pick **use this** or **no thanks**.
+
 **something broke.**
 sorry! please [open an issue](../../issues) and say what you clicked right
 before it happened. if you can, attach `app.log` from the same folder as
@@ -266,7 +277,9 @@ npm run app:build   # make the installer
 ## thanks
 
 the font is [Departure Mono](https://departuremono.com) by Helena Zhang. the
-buddies were drawn from scratch, pixel by pixel. the whole vibe owes a lot to
-[Mochi](https://likhith1542.github.io/mochi/) and old Windows pop-ups.
+buddies were drawn from scratch, pixel by pixel. the look owes a lot to old
+Windows pop-ups and little desk pets.
 
-made with care by saanvi ✿
+tuck is free and open source under the [MIT licence](LICENSE).
+
+tuck is a little pixel world, curated by saanvi ♡

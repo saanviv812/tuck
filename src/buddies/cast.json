@@ -48,7 +48,7 @@
     },
     {
       "id": "scoop",
-      "name": "Scoop",
+      "name": "Scoopie",
       "kind": "ice cream",
       "palette": {
         "o": "#A9DCC6",
@@ -81,7 +81,7 @@
     },
     {
       "id": "latte",
-      "name": "Latte",
+      "name": "Brewbie",
       "kind": "coffee",
       "palette": {
         "o": "#A9CCE8",
@@ -135,7 +135,7 @@
     },
     {
       "id": "cake",
-      "name": "Momo",
+      "name": "Shortie",
       "kind": "shortcake",
       "palette": {
         "o": "#FCE6A8",
@@ -222,8 +222,8 @@
     },
     {
       "id": "cupcake",
-      "name": "Cupcake",
-      "kind": "cupcake",
+      "name": "Matcha",
+      "kind": "matcha cupcake",
       "palette": {
         "o": "#BFDDB2",
         "c": "#FFF3DE",
@@ -313,7 +313,7 @@
     },
     {
       "id": "clem",
-      "name": "Clem",
+      "name": "Tango",
       "kind": "orange",
       "palette": {
         "o": "#FBB86C",
@@ -365,7 +365,7 @@
     },
     {
       "id": "purin",
-      "name": "Purin",
+      "name": "Wobbles",
       "kind": "pudding",
       "palette": {
         "o": "#FCE3A0",

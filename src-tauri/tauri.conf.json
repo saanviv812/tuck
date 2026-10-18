@@ -58,13 +58,15 @@
         "displayLanguageSelector": false
       }
     },
-    "createUpdaterArtifacts": true
+    "createUpdaterArtifacts": true,
+    "publisher": "Saanvi Varma",
+    "homepage": "https://saanviv812.github.io/tuck/"
   },
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE4QkQwRERBOTY2NDQ1Q0EKUldUS1JXU1cyZzI5R0Nzb1k2Q0c1WEtXQlYycVpmVFR4RFFzZHIyNjY4Y3kzbkR1Y1BJb2NBVzgK",
       "endpoints": [
-        "https://github.com/YOUR-GITHUB-USERNAME/tuck/releases/latest/download/latest.json"
+        "https://github.com/saanviv812/tuck/releases/latest/download/latest.json"
       ],
       "windows": {
         "installMode": "passive"

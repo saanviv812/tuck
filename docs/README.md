@@ -19,6 +19,7 @@ Other files in the repo root:
 - [CHANGELOG.md](../CHANGELOG.md): what changed in each version
 - [CONTRIBUTING.md](../CONTRIBUTING.md): how to help
 - [PRIVACY.md](../PRIVACY.md): what tuck does (and doesn't do) with your data
+- [LICENSE](../LICENSE): MIT
 
 ## repo layout
 
@@ -46,8 +47,11 @@ tuck/
 │   ├── capabilities/         what each window is allowed to do
 │   ├── icons/                app icons (generated, see scripts/)
 │   └── tauri.conf.json       app name, windows, installer settings
+├── site/                     the website (landing page): template, styles, script
 ├── tests/ui-audit.mjs        automated test of every popup + library flow
-├── scripts/make-icon.py      draws the app icon from the buddy data
+├── scripts/
+│   ├── make-icon.py          draws the app icon from the buddy data
+│   └── build-site.mjs        builds the website into one self-contained file
 ├── docs/                     you are here
 └── .github/workflows/        automatic checks + release builds
 ```
