@@ -8,27 +8,63 @@ const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getEleme
 let current = "pip";
 
 // small logo buddy in the top bar (static frame, crisp at any scale)
-function drawLogo(id: string) {
-  // draw at 1x, find the buddy's real pixels (the canvas has headroom for hops
-  // and marks), then scale just that box up crisply
+// The logo buddy watches the pointer too. Its box is cropped to the buddy's
+// real pixels (the canvas has headroom for hops and marks) so it sits neatly
+// beside the wordmark; pupils are painted at full screen resolution.
+const logo = { id: "pip", box: { x: 0, y: 0, w: CW, h: CH }, look: { x: 0.4, y: 0.4 }, want: { x: 0.4, y: 0.4 }, raf: 0 };
+const logoCanvas = $<HTMLCanvasElement>("logo-buddy");
+const logoScale = () => Math.max(1, Math.round(2 * (window.devicePixelRatio || 1)));
+
+function measureLogo(id: string) {
   const src = document.createElement("canvas");
   src.width = CW; src.height = CH;
   const sctx = src.getContext("2d")!;
-  paint(sctx, byId(id), { ...defaultFrame(), look: { x: 0.4, y: 0.4 } }, 1);
+  paint(sctx, byId(id), { ...defaultFrame(), look: { x: 0, y: 0 } }, 1);
   const px = sctx.getImageData(0, 0, CW, CH).data;
   let x0 = CW, y0 = CH, x1 = 0, y1 = 0;
   for (let y = 0; y < CH; y++) for (let x = 0; x < CW; x++) {
     if (px[(y * CW + x) * 4 + 3] > 0) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
   }
-  const w = x1 - x0 + 1, h = y1 - y0 + 1;
-  const dpr = window.devicePixelRatio || 1;
-  const k = Math.max(1, Math.round(2 * dpr));
-  const c = $<HTMLCanvasElement>("logo-buddy");
-  c.width = w * k; c.height = h * k;
-  c.style.width = `${(w * k) / dpr}px`; c.style.height = `${(h * k) / dpr}px`;
-  const ctx = c.getContext("2d")!;
+  logo.box = { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 };
+  const k = logoScale(), dpr = window.devicePixelRatio || 1;
+  logoCanvas.width = logo.box.w * k; logoCanvas.height = logo.box.h * k;
+  logoCanvas.style.width = `${(logo.box.w * k) / dpr}px`;
+  logoCanvas.style.height = `${(logo.box.h * k) / dpr}px`;
+}
+
+function paintLogo() {
+  const k = logoScale();
+  const full = document.createElement("canvas");
+  full.width = CW * k; full.height = CH * k;
+  paint(full.getContext("2d")!, byId(logo.id), { ...defaultFrame(), look: logo.look }, k);
+  const ctx = logoCanvas.getContext("2d")!;
   ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(src, x0, y0, w, h, 0, 0, w * k, h * k);
+  ctx.clearRect(0, 0, logoCanvas.width, logoCanvas.height);
+  const { x, y, w, h } = logo.box;
+  ctx.drawImage(full, x * k, y * k, w * k, h * k, 0, 0, w * k, h * k);
+}
+
+function drawLogo(id: string) {
+  logo.id = id;
+  measureLogo(id);
+  paintLogo();
+}
+
+function logoLookAt(px: number, py: number) {
+  const r = logoCanvas.getBoundingClientRect();
+  const dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height * 0.45);
+  const d = Math.hypot(dx, dy) || 1;
+  const reach = Math.min(1, d / 120);
+  logo.want = { x: (dx / d) * reach, y: (dy / d) * reach };
+  if (!logo.raf) logo.raf = requestAnimationFrame(easeLogo);
+}
+
+function easeLogo() {
+  const gx = logo.want.x - logo.look.x, gy = logo.want.y - logo.look.y;
+  if (Math.abs(gx) < 0.01 && Math.abs(gy) < 0.01) { logo.look = { ...logo.want }; paintLogo(); logo.raf = 0; return; }
+  logo.look = { x: logo.look.x + gx * 0.28, y: logo.look.y + gy * 0.28 };
+  paintLogo();
+  logo.raf = requestAnimationFrame(easeLogo);
 }
 
 // ---- the live popup --------------------------------------------------------
@@ -120,6 +156,7 @@ function choose(id: string, buddy?: Buddy) {
 
 // every buddy on the page watches the cursor
 addEventListener("pointermove", (e) => {
+  logoLookAt(e.clientX, e.clientY);
   hero.lookAt(e.clientX, e.clientY);
   castBuddies.forEach((x) => x.lookAt(e.clientX, e.clientY));
 }, { passive: true });
