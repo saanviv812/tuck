@@ -1,0 +1,191 @@
+/* tuck design tokens.
+   Matte Win9x: flat fills, hard 2px bevels, solid offset shadows.
+   No gradients, no blur, no glow, no translucency on surfaces. */
+
+@font-face {
+  font-family: "Departure Mono";
+  src: url("../assets/fonts/DepartureMono-Regular.woff2") format("woff2");
+  font-display: block;
+}
+
+:root {
+  /* surfaces */
+  --desk: #F6EFE2;        /* library backdrop */
+  --face: #FFFDF6;        /* window face (Mochi-warm paper) */
+  --field: #FFFFFF;       /* text fields */
+  --select: #FBE6A6;      /* selection fill (butter) */
+  --edge: #5B4A41;        /* the one outline colour, shared with the sprites */
+
+  /* ink */
+  --ink: #463227;         /* text                        (11.6:1 on face) */
+  --ink-2: #7A6355;       /* secondary text              (5.6:1 on face) */
+  --ink-3: #A8968A;       /* placeholders, large only    (2.9:1) */
+
+  /* bevel */
+  --hi: #FFFFFF;
+  --lo: #EADFCF;
+  --lo-2: #D6C6B1;
+
+  /* accent */
+  --orange: #F7B57E;      /* overridden per buddy: --accent */
+  --orange-lo: #E0914F;
+  --accent: var(--orange);
+
+  /* vault swatches — muted, used as small chips only */
+  --v-orange: #F7B57E;
+  --v-blush: #F4A9B6;
+  --v-butter: #F6DA82;
+  --v-sage: #A9D3A0;
+  --v-sky: #A9CCE8;
+  --v-lilac: #CDBFE6;
+  --v-cocoa: #DDBA96;
+
+  /* type: one family, sized on its 11px grid */
+  --font: "Departure Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fs-s: 11px;
+  --fs-m: 16.5px;   /* writing */
+  --fs-l: 22px;
+  --lh: 1.5;
+  --track-caps: 0.12em;
+
+  /* space (4px base) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+
+  /* structure */
+  --line: 2px;
+  --bevel-raised: inset -2px -2px 0 var(--lo-2), inset 2px 2px 0 var(--hi);
+  --bevel-sunken: inset 2px 2px 0 var(--lo), inset -2px -2px 0 var(--hi);
+  --drop: 4px 4px 0 var(--edge);
+  --drop-s: 2px 2px 0 var(--edge);
+
+  /* motion: short, stepped — UI moves in pixel beats, like the sprites */
+  --t-fast: 80ms;
+  --t-med: 160ms;
+  --step: steps(3, end);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+[hidden] { display: none !important; }
+
+body {
+  font-family: var(--font);
+  font-size: var(--fs-s);
+  line-height: var(--lh);
+  color: var(--ink);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+canvas.buddy { image-rendering: pixelated; display: block; cursor: grab; touch-action: none; }
+canvas.buddy:active { cursor: grabbing; }
+
+::selection { background: var(--select); color: var(--ink); }
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--edge); outline-offset: 2px; }
+.field:focus-visible, textarea:focus-visible { outline: none; }
+
+/* --- primitives ---------------------------------------------------------- */
+
+.win {
+  background: var(--face);
+  border: var(--line) solid var(--edge);
+  box-shadow: var(--bevel-raised), var(--drop);
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  height: 26px;
+  padding: 0 3px 0 var(--s2);
+  background: var(--accent);
+  border-bottom: var(--line) solid var(--edge);
+  color: var(--ink);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+.inactive .titlebar { background: var(--lo); }
+.titlebar .title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.btn {
+  font: inherit;
+  color: var(--ink);
+  background: var(--face);
+  border: var(--line) solid var(--edge);
+  box-shadow: var(--bevel-raised);
+  padding: 3px var(--s3);
+  min-height: 26px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: #FFF8EC; }
+.btn:active, .btn[aria-pressed="true"] {
+  box-shadow: var(--bevel-sunken);
+  padding: 4px 11px 2px 13px;
+}
+.btn.primary { background: var(--accent); }
+.btn.primary:hover { filter: brightness(1.04); }
+.btn:disabled { color: var(--ink-3); cursor: default; }
+.btn.ghost { border-color: transparent; box-shadow: none; background: transparent; }
+.btn.ghost:hover { border-color: var(--ink); box-shadow: var(--bevel-raised); background: var(--face); }
+
+/* tiny square title-bar button */
+.tbtn {
+  width: 18px; height: 18px;
+  display: grid; place-items: center;
+  font: inherit; line-height: 1;
+  color: var(--ink);
+  background: var(--face);
+  border: var(--line) solid var(--edge);
+  box-shadow: inset -1px -1px 0 var(--lo-2), inset 1px 1px 0 var(--hi);
+  color: var(--edge);
+  padding: 0;
+  cursor: pointer;
+}
+.tbtn:active { box-shadow: inset 1px 1px 0 var(--lo-2); }
+.tbtn svg { display: block; }
+
+.field {
+  font: inherit;
+  color: var(--ink);
+  background: var(--field);
+  border: var(--line) solid var(--edge);
+  box-shadow: var(--bevel-sunken);
+  padding: var(--s2) var(--s3);
+  user-select: text;
+  -webkit-user-select: text;
+}
+.field::placeholder { color: var(--ink-3); opacity: 1; }
+
+.kbd {
+  display: inline-block;
+  padding: 0 4px;
+  border: 1px solid var(--ink-2);
+  box-shadow: 1px 1px 0 var(--lo-2);
+  color: var(--ink-2);
+  line-height: 14px;
+}
+
+.chip-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border: 1px solid var(--edge);
+  flex: none;
+}
+
+.caps { text-transform: uppercase; letter-spacing: var(--track-caps); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

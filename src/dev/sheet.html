@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buddy sheet</title>
+  <style>
+    @font-face { font-family: "Departure Mono"; src: url("../assets/fonts/DepartureMono-Regular.woff2") format("woff2"); }
+    body { margin: 0; padding: 24px; background: #FFFDF6; color: #33241E; font: 11px "Departure Mono", monospace; }
+    .row { display: flex; gap: 6px; align-items: end; margin-bottom: 14px; }
+    .name { width: 70px; text-transform: uppercase; letter-spacing: 0.1em; }
+    figure { margin: 0; text-align: center; }
+    canvas { image-rendering: pixelated; display: block; }
+    figcaption { margin-top: 2px; color: #7A6556; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="./sheet.ts"></script>
+</body>
+</html>

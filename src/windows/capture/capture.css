@@ -1,0 +1,117 @@
+/* Quick-capture popup. The window itself is transparent; everything you see
+   is the box, its hard shadow, and the buddy perched on the title bar. */
+
+html, body { background: transparent; overflow: hidden; }
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  padding: 0 10px 10px 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.perch {
+  position: relative;
+  height: 92px;               /* scale 4: feet rest on the title bar's top edge */
+  flex: none;
+  z-index: 3;
+}
+.perch canvas.buddy { position: absolute; left: 0; top: 0; }
+
+.capture { display: flex; flex-direction: column; flex: 1; min-height: 0; position: relative; }
+.capture .titlebar { cursor: default; }
+
+.body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: var(--s3);
+  flex: 1;
+  min-height: 0;
+}
+
+#text {
+  flex: 1;
+  min-height: 0;
+  resize: none;
+  font-size: var(--fs-m);
+  line-height: 1.5;
+  padding: var(--s2) var(--s3);
+  caret-color: var(--edge);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lo-2) transparent;
+}
+
+.row { display: flex; align-items: center; gap: var(--s2); }
+.hint { flex: 1; color: var(--ink-2); text-align: right; white-space: nowrap; overflow: hidden; }
+.hint .sep { display: inline-block; width: var(--s2); }
+.hint .kbd { margin-right: 2px; }
+
+.vault-btn { display: inline-flex; align-items: center; gap: 6px; max-width: 170px; }
+.vault-btn #vault-name { overflow: hidden; text-overflow: ellipsis; }
+
+/* vault picker: a small Win9x list dialog over the body */
+.picker {
+  position: absolute;
+  left: var(--s3);
+  bottom: 50px;
+  width: 230px;
+  max-height: calc(100% - 58px);
+  overflow-y: auto;
+  padding: 3px;
+  z-index: 5;
+}
+.picker ul { list-style: none; margin: 0; padding: 0; }
+.picker li {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: 4px var(--s2);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.picker li .n { margin-left: auto; color: var(--ink-3); }
+.picker li[aria-selected="true"] { background: var(--select); border-color: var(--edge); }
+.picker li.add { color: var(--ink-2); border-top: 1px dashed var(--lo-2); margin-top: 3px; }
+.new-vault { padding: 4px; }
+.new-vault input { width: 100%; padding: 4px 8px; }
+
+/* speech bubble beside the buddy */
+.bubble {
+  position: absolute;
+  bottom: 34px;
+  left: 110px;
+  padding: 5px 10px;
+  background: var(--field);
+  border: var(--line) solid var(--ink);
+  box-shadow: var(--drop-s);
+  white-space: nowrap;
+  font-size: var(--fs-s);
+  animation: pop var(--t-med) var(--step);
+}
+/* stair-stepped pixel tail pointing left at the buddy */
+.bubble::before, .bubble::after {
+  content: "";
+  position: absolute;
+  background: var(--edge);
+}
+.bubble::before { left: -6px; bottom: 6px; width: 6px; height: 2px; }
+.bubble::after { left: -10px; bottom: 4px; width: 4px; height: 2px; }
+.bubble.err { background: #FDE6E2; }
+
+@keyframes pop {
+  from { transform: translateY(4px); }
+  to { transform: none; }
+}
+
+/* the box pulses one pixel when a save lands — felt, not seen */
+.capture.saved { animation: land var(--t-med) var(--step); }
+@keyframes land { 50% { transform: translateY(2px); } }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* browser design preview only: show the popup at its real size on a desk */
+body.preview { background: var(--desk); overflow: auto; }
+body.preview #stage { width: 480px; height: 320px; margin: 48px auto; }

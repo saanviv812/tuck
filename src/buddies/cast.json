@@ -1,0 +1,397 @@
+{
+  "_doc": "Loaf-style buddies. Body is authored as the LEFT half (8 cols) and mirrored to 16. Rows are bottom-aligned on a 16-row grid. One shared soft outline, flat pastel fills, no shading. Keys: # outline, o main, c secondary, p pink, w white, x accent, k extra. Eyes are drawn at runtime: 2x2 white with a 1px pupil that follows the cursor. eye.x/eye.y = left eye top-left in body coords. extras = non-mirrored overlays [x, y, rows] in body coords (x may be <0 or >15).",
+  "outline": "#5B4A41",
+  "buddies": [
+    {
+      "id": "pip",
+      "name": "Nibbles",
+      "kind": "mouse",
+      "palette": {
+        "o": "#F7B57E",
+        "c": "#FFF1DC",
+        "p": "#F4A3A3",
+        "w": "#FFFDF6"
+      },
+      "eye": {
+        "x": 4,
+        "y": 6
+      },
+      "half": [
+        ".###....",
+        "#ppp#...",
+        "#ppp#...",
+        ".#p#####",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooocp",
+        ".#oooooc",
+        ".#oooooo",
+        "..#ooooo",
+        "...###.."
+      ],
+      "tail": {
+        "x": 15,
+        "y": 8,
+        "still": [
+          "..#",
+          ".#.",
+          "#.."
+        ],
+        "wag": [
+          "...",
+          ".##",
+          "#.."
+        ]
+      }
+    },
+    {
+      "id": "scoop",
+      "name": "Scoop",
+      "kind": "ice cream",
+      "palette": {
+        "o": "#A9DCC6",
+        "c": "#F3CC8E",
+        "p": "#F6A8B4",
+        "w": "#FFFFFF",
+        "x": "#DDA963"
+      },
+      "eye": {
+        "x": 4,
+        "y": 4
+      },
+      "half": [
+        "....####",
+        "..##oooo",
+        ".#owoooo",
+        "#ooooooo",
+        "#ooooooo",
+        "#ooooooo",
+        "#oppooo#",
+        "#ooooooo",
+        ".#######",
+        "..#cxccx",
+        "...#xccx",
+        "....#cxc",
+        ".....#cx",
+        "......#c",
+        ".......#"
+      ]
+    },
+    {
+      "id": "latte",
+      "name": "Latte",
+      "kind": "coffee",
+      "palette": {
+        "o": "#A9CCE8",
+        "c": "#EED3AE",
+        "p": "#F6B3BA",
+        "w": "#FFFFFF",
+        "x": "#FFF4E4",
+        "k": "#D9CFC6"
+      },
+      "eye": {
+        "x": 4,
+        "y": 6
+      },
+      "half": [
+        "........",
+        "........",
+        ".#######",
+        ".#cccccc",
+        ".#######",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oppoo#",
+        ".#oooooo",
+        "..#ooooo",
+        "...#####",
+        "########",
+        ".#xxxxxx",
+        "..######"
+      ],
+      "extras": [
+        [
+          15,
+          5,
+          [
+            "##.",
+            "..#",
+            "..#",
+            "##."
+          ]
+        ],
+        [
+          6,
+          0,
+          [
+            "k.k.",
+            ".k.k"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cake",
+      "name": "Momo",
+      "kind": "shortcake",
+      "palette": {
+        "o": "#FCE6A8",
+        "c": "#FFF8F0",
+        "p": "#F6A8A0",
+        "w": "#CFE3F2",
+        "x": "#F4A3B4",
+        "k": "#F07F8E",
+        "g": "#9DCB8B"
+      },
+      "eye": {
+        "x": 4,
+        "y": 7
+      },
+      "half": [
+        "........",
+        "........",
+        "........",
+        "..######",
+        ".#cccccc",
+        "#ccccccc",
+        "#coccocc",
+        "#ooooooo",
+        "#ooooooo",
+        "#oppooo#",
+        "#xxxxxxx",
+        "#ooooooo",
+        "########",
+        "#wwwwwww",
+        ".#######"
+      ],
+      "extras": [
+        [
+          6,
+          0,
+          [
+            ".gg.",
+            "#kk#",
+            "#kk#"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "miso",
+      "name": "Miso",
+      "kind": "cat",
+      "palette": {
+        "o": "#CDBFE6",
+        "c": "#FFF8F0",
+        "p": "#F4A9B6",
+        "w": "#FFFDF6"
+      },
+      "eye": {
+        "x": 4,
+        "y": 5
+      },
+      "half": [
+        "..##....",
+        ".#pp#...",
+        ".#ppo###",
+        "#ooooooo",
+        "#ooooooo",
+        "#ooooooo",
+        "#ooooooo",
+        "#ooooccp",
+        "#ooooocc",
+        "#ooooooo",
+        ".#oooooo",
+        "..###..."
+      ],
+      "tail": {
+        "x": 16,
+        "y": 8,
+        "still": [
+          "...",
+          "oo#"
+        ],
+        "wag": [
+          "..#",
+          "oo."
+        ]
+      }
+    },
+    {
+      "id": "cupcake",
+      "name": "Cupcake",
+      "kind": "cupcake",
+      "palette": {
+        "o": "#BFDDB2",
+        "c": "#FFF3DE",
+        "p": "#F6AFA6",
+        "w": "#F49AAE",
+        "x": "#9CC48C",
+        "k": "#F07F8E"
+      },
+      "eye": {
+        "x": 4,
+        "y": 9
+      },
+      "half": [
+        "........",
+        "........",
+        "....####",
+        "..##cccc",
+        ".#cwcccc",
+        "#ccccccw",
+        "#cwccccc",
+        "########",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oppoo#",
+        "..#xoxox",
+        "..#xoxox",
+        "...#####"
+      ],
+      "extras": [
+        [
+          6,
+          0,
+          [
+            ".##.",
+            "#kk#",
+            "#kk#"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "boba",
+      "name": "Boba",
+      "kind": "milk tea",
+      "palette": {
+        "o": "#ECCDA8",
+        "c": "#FFF6EA",
+        "p": "#F4A9A6",
+        "w": "#FFFFFF",
+        "x": "#6E4E3F",
+        "k": "#F6A9C0"
+      },
+      "eye": {
+        "x": 4,
+        "y": 7
+      },
+      "half": [
+        "........",
+        "........",
+        "....####",
+        "...#cccc",
+        "########",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oppoo#",
+        "..#ooooo",
+        "..#ooooo",
+        "..#xoxox",
+        "..#oxoxo",
+        "...#####"
+      ],
+      "extras": [
+        [
+          9,
+          0,
+          [
+            "###",
+            "#k#",
+            "#k#",
+            "#k#"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "clem",
+      "name": "Clem",
+      "kind": "orange",
+      "palette": {
+        "o": "#FBB86C",
+        "c": "#FBB86C",
+        "p": "#F59A8A",
+        "w": "#FFE3B8",
+        "x": "#9DCB8B"
+      },
+      "eye": {
+        "x": 4,
+        "y": 7
+      },
+      "half": [
+        "........",
+        "........",
+        "....####",
+        "..##oooo",
+        ".#oooooo",
+        ".#owoooo",
+        "#ooooooo",
+        "#ooooooo",
+        "#ooooooo",
+        "#oppooo#",
+        "#ooooooo",
+        ".#oooooo",
+        ".#oooooo",
+        "..##oooo",
+        "....####",
+        "...##..."
+      ],
+      "extras": [
+        [
+          7,
+          1,
+          [
+            "#"
+          ]
+        ],
+        [
+          8,
+          0,
+          [
+            "..###",
+            ".#xx#",
+            "#xx#."
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "purin",
+      "name": "Purin",
+      "kind": "pudding",
+      "palette": {
+        "o": "#FCE3A0",
+        "c": "#CFE3F2",
+        "p": "#F6AFA6",
+        "w": "#FFF6DA",
+        "x": "#C99267"
+      },
+      "eye": {
+        "x": 4,
+        "y": 5
+      },
+      "half": [
+        "...#####",
+        "..#xxxxx",
+        "..#xxwxx",
+        "..#oxxox",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oooooo",
+        ".#oppoo#",
+        ".#oooooo",
+        "########",
+        "#ccccccc",
+        ".#######"
+      ]
+    }
+  ]
+}

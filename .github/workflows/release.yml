@@ -1,0 +1,46 @@
+# Push a tag like v0.2.0 and this builds the Windows installer, signs the
+# update, and drafts a GitHub release with everything attached.
+#
+# One-time setup (repo → Settings → Secrets and variables → Actions):
+#   TAURI_SIGNING_PRIVATE_KEY           contents of ~/.tauri/thoughtcatcher.key (see docs/shipping.md)
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  leave empty if you made the key without one
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - run: npm ci
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: tuck ${{ github.ref_name }}
+          releaseBody: "Grab the `-setup.exe` below and run it. Already have it? It'll update itself."
+          releaseDraft: true
+          includeUpdaterJson: true

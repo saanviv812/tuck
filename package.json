@@ -1,0 +1,27 @@
+{
+  "name": "tuck",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "app:dev": "tauri dev",
+    "app:build": "tauri build",
+    "test:ui": "node tests/ui-audit.mjs",
+    "icons": "python scripts/make-icon.py && tauri icon scripts/out/icon-1024.png",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.1.1",
+    "@tauri-apps/plugin-autostart": "^2.2.0",
+    "@tauri-apps/plugin-opener": "^2.2.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.1.0",
+    "@types/node": "^26.6.5",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.3"
+  },
+  "description": "A tiny desktop app for catching thoughts before they fly off."
+}
