@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/buddies.png" alt="the nine tuck buddies: a mouse, ice cream, coffee, cake, cat, cupcake, boba, orange and pudding" width="760">
+  <img src="docs/images/buddies.png" alt="the nine tuck buddies: a mouse, ice cream, coffee, puppy, cat, cupcake, boba, orange and pudding" width="760">
 </p>
 
 <h1 align="center">tuck</h1>
@@ -23,9 +23,10 @@
 you're in the middle of something. an idea shows up. you think "i'll remember
 that". you don't.
 
-writing it down *should* be easy, but it usually goes like: open notes app, find
-the right folder, make a new note, think of a title, type, and by then you've
-lost your train of thought *and* the idea.
+writing it down *should* be easy, but it rarely is. open a notes app, find the
+right folder, make a new note, think of a title. that's a lot of little decisions
+in the middle of something else. you lose the momentum of your work, and often
+the idea too.
 
 tuck skips all of that. one shortcut, a little box pops up, you type, you press
 enter, it's gone and you're back to work. your flow stays unbroken, and you can sort
@@ -49,19 +50,17 @@ and this is where everything ends up, when you feel like looking back.
 1. go to the [**releases page**](../../releases/latest)
 2. under **Assets**, click the file that ends in **`-setup.exe`** (something like `tuck_0.1.0_x64-setup.exe`)
 3. open it once it's downloaded
-4. tuck is new, so windows might show a blue box saying **"Windows protected your
-   PC"**. it just means windows hasn't seen tuck much yet. click **More info**, then
-   **Run anyway**. all of tuck's code is right here if you'd like to check it
-5. click through the installer. it doesn't need an admin password, and it only
-   installs for you
-6. that's it. tuck opens, and you'll see your buddy hanging out on the taskbar
+4. follow the installer
+5. that's it. tuck opens, and you'll see your buddy hanging out on the taskbar
+
+side note: tuck is new, so windows might say it doesn't recognise it yet. if it
+does, click **More info**, then **Run anyway**.
 
 it's about **2 MB**, so even slow internet is fine. you don't need an account and
 nothing gets uploaded anywhere.
 
-**updates are automatic.** when a new version is out, it downloads quietly in the
-background. right-click the tuck icon near your clock and you'll see
-**"restart to update"**. click it whenever you like.
+**updates.** when a new version is out, right-click the tuck icon near your clock
+and you'll see **"restart to update"**. click it whenever you like.
 
 **want to remove it?** Windows Settings → Apps → Installed apps → tuck →
 Uninstall. your thoughts stay in their folder in case you come back (see
@@ -140,9 +139,7 @@ there are nine to pick from: **nibbles** the mouse, **scoopie** the ice cream,
 
 they're not just decoration. your buddy:
 
-- watches your cursor, wherever it is on the screen
 - blinks, breathes, and wags now and then
-- looks at what you're typing
 - does a happy hop when you save something
 - falls asleep if you leave it alone for a while
 - gets a little heart if you click it
@@ -171,7 +168,7 @@ click **settings** in the library.
 - **your buddy**: click one to preview it
 - **shortcut**: click the button, then press the keys you want (for example `Alt` + `Space`)
 - **let my buddy hang out on the desktop**: the taskbar buddy, on or off
-- **start when I log in**: tuck opens quietly when your computer starts
+- **start when I log in**: tuck starts in the tray when you log in
 - **suggest types, tags and pockets**: the little suggestions, on or off
 - **your data**: **show file** opens the folder, **export as markdown** saves everything as a normal text file in your Documents
 
