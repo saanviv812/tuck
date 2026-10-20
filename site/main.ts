@@ -94,7 +94,7 @@ function save() {
   if (!value) { hero.react("think", 900); text.focus(); return; }
   const t = { id: "demo", text: value, created_at: Date.now(), updated_at: Date.now(), vault_id: null, category: null, tags: hashtags(value), suggestion: null, archived: false };
   const s = suggest(t, [], []);
-  const meta = [s.category.toLowerCase(), ...[...new Set([...t.tags, ...s.tags])].slice(0, 2).map((g) => `#${g}`)].join(" · ");
+  const meta = [s.category.toLowerCase(), ...(pocket ? [POCKETS[pocket].name] : []), ...[...new Set([...t.tags, ...s.tags])].slice(0, 2).map((g) => `#${g}`)].join(" · ");
   const li = document.createElement("li");
   li.className = "new";
   li.innerHTML = `<span class="t"></span><span class="m"></span>`;
@@ -118,10 +118,80 @@ text.addEventListener("input", () => {
 });
 text.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); save(); }
-  if (e.key === "Escape") { text.blur(); }
+  if (e.key === "Escape" && picker.hidden) close();
 });
 text.addEventListener("focus", () => hero.react("curious", 700));
 $("demo-save").addEventListener("click", save);
+
+// the popup's other buttons, working like they do in the app
+function close() {
+  closePicker();
+  text.blur();
+  hero.react("curious", 700);
+  say(text.value.trim() ? "closed. your draft will wait." : "see you next time.");
+}
+$("demo-close").addEventListener("click", close);
+
+const tucked = document.querySelector<HTMLElement>(".tucked")!;
+$("demo-lib").addEventListener("click", () => {
+  closePicker();
+  tucked.classList.remove("peek"); void tucked.offsetWidth; tucked.classList.add("peek");
+  tucked.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  hero.react("happy", 700);
+  say("everything ends up in your library.");
+});
+
+// pockets: the same little picker as the app
+const POCKETS = [
+  { name: "main pocket", color: "var(--face)" },
+  { name: "study", color: "var(--v-sky)" },
+  { name: "work", color: "var(--v-sage)" },
+  { name: "ideas", color: "var(--v-butter)" },
+];
+let pocket = 0, pick = 0;
+const vaultBtn = $("demo-vault");
+const picker = $("demo-picker");
+const pickerList = $("demo-picker-list");
+POCKETS.forEach((p, i) => {
+  const li = document.createElement("li");
+  li.setAttribute("role", "option");
+  li.innerHTML = `<span class="chip-dot" style="background:${p.color}"></span><span>${p.name}</span>`;
+  li.addEventListener("click", () => choosePocket(i));
+  li.addEventListener("pointermove", () => { pick = i; markPick(); });
+  pickerList.append(li);
+});
+function markPick() {
+  [...pickerList.children].forEach((li, i) => li.setAttribute("aria-selected", String(i === pick)));
+}
+function openPicker() {
+  pick = pocket; markPick();
+  picker.hidden = false;
+  vaultBtn.setAttribute("aria-expanded", "true");
+  pickerList.focus({ preventScroll: true });
+}
+function closePicker() {
+  if (picker.hidden) return;
+  picker.hidden = true;
+  vaultBtn.setAttribute("aria-expanded", "false");
+}
+function choosePocket(i: number) {
+  pocket = i;
+  $("demo-vault-name").textContent = POCKETS[i].name;
+  $("demo-vault-dot").style.background = POCKETS[i].color;
+  closePicker();
+  text.focus({ preventScroll: true });
+}
+vaultBtn.addEventListener("click", () => (picker.hidden ? openPicker() : closePicker()));
+pickerList.addEventListener("keydown", (e) => {
+  const n = POCKETS.length;
+  if (e.key === "ArrowDown") { e.preventDefault(); pick = (pick + 1) % n; markPick(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); pick = (pick + n - 1) % n; markPick(); }
+  else if (e.key === "Enter") { e.preventDefault(); choosePocket(pick); }
+  else if (e.key === "Escape") { e.preventDefault(); closePicker(); vaultBtn.focus(); }
+});
+addEventListener("pointerdown", (e) => {
+  if (!picker.hidden && !picker.contains(e.target as Node) && !vaultBtn.contains(e.target as Node)) closePicker();
+});
 
 // ---- the cast, standing on a taskbar ----------------------------------------
 const cast = $("cast");

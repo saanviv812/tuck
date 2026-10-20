@@ -88,8 +88,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; }
 .perch { position: relative; z-index: 3; flex: none; }
 .perch canvas.buddy { position: absolute; left: 0; top: 0; }
 .popup .titlebar { gap: 4px; }
-.popup .tbtn { cursor: default; }
-.popup-body { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s3); }
+.popup-body { position: relative; display: flex; flex-direction: column; gap: var(--s3); padding: var(--s3); }
 #demo-text {
   resize: none; font-size: var(--body); line-height: 1.5; min-height: 108px;
   caret-color: var(--edge);
@@ -100,6 +99,20 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; }
   border: var(--line) solid var(--edge); box-shadow: var(--bevel-raised);
   background: var(--face); padding: 3px 10px; font-size: 11px; min-height: 26px;
 }
+.vault-btn { display: inline-flex; align-items: center; gap: 6px; max-width: 170px; }
+.vault-btn .chip-dot { background: var(--face); }
+.picker {
+  position: absolute; left: var(--s3); bottom: 52px; width: 200px;
+  padding: 3px; z-index: 5; animation: pop var(--t-med) var(--step);
+}
+.picker ul { list-style: none; margin: 0; padding: 0; outline: none; }
+.picker li {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: 4px var(--s2); cursor: pointer; font-size: 11px;
+  border: 1px solid transparent;
+}
+.picker li:hover { background: #FFF8EC; }
+.picker li[aria-selected="true"] { background: var(--select); border-color: var(--edge); }
 .hint { margin-left: auto; color: var(--ink-2); font-size: 11px; }
 .hint .kbd { margin-right: 4px; }
 .popup .btn { font-size: 11px; }
@@ -127,6 +140,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; }
   padding: 6px 10px; min-width: 0;
 }
 #demo-list li.new { animation: pop var(--t-med) var(--step); }
+.tucked.peek #demo-list li { animation: peek 700ms var(--step); }
+@keyframes peek { 0%, 60% { background: var(--select); } }
 #demo-list .t { font-size: 13.75px; overflow-wrap: anywhere; }
 #demo-list .m { font-size: 11px; color: var(--ink-2); }
 

@@ -40,14 +40,17 @@
           <div class="bubble" id="demo-bubble" role="status" aria-live="polite" hidden></div>
         </div>
         <div class="win popup" id="demo-win">
-          <div class="titlebar"><span class="title">tuck a thought</span><span class="tbtn" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges"><path d="M1 1h8v2H1zM1 4h8v2H1zM1 7h8v2H1z" fill="currentColor"/></svg></span><span class="tbtn" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges"><path d="M1 1h2v2H1zM3 3h2v2H3zM5 5h2v2H5zM7 7h2v2H7zM7 1h2v2H7zM5 3h2v2H5zM3 5h2v2H3zM1 7h2v2H1z" fill="currentColor"/></svg></span></div>
+          <div class="titlebar"><span class="title">tuck a thought</span><button class="tbtn" id="demo-lib" type="button" aria-label="Open the library" title="library"><svg width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h8v2H1zM1 4h8v2H1zM1 7h8v2H1z" fill="currentColor"/></svg></button><button class="tbtn" id="demo-close" type="button" aria-label="Close" title="close"><svg width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h2v2H1zM3 3h2v2H3zM5 5h2v2H5zM7 7h2v2H7zM7 1h2v2H7zM5 3h2v2H5zM3 5h2v2H3zM1 7h2v2H1z" fill="currentColor"/></svg></button></div>
           <div class="popup-body">
             <label class="sr" for="demo-text">Type a thought to try it</label>
             <textarea id="demo-text" class="field" rows="3" placeholder="What's on your mind? try typing here"></textarea>
             <div class="row">
-              <span class="chip"><span class="chip-dot"></span>main pocket</span>
+              <button class="btn vault-btn" id="demo-vault" type="button" aria-haspopup="listbox" aria-expanded="false"><span class="chip-dot" id="demo-vault-dot"></span><span id="demo-vault-name">main pocket</span><svg width="8" height="8" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 2h8v2H6v2H2V4H0z" fill="currentColor"/></svg></button>
               <span class="hint"><span class="kbd">esc</span> close</span>
               <button class="btn primary" id="demo-save" type="button">save ↵</button>
+            </div>
+            <div class="picker win" id="demo-picker" hidden>
+              <ul role="listbox" id="demo-picker-list" aria-label="Choose a pocket" tabindex="-1"></ul>
             </div>
           </div>
         </div>
